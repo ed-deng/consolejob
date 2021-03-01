@@ -8,17 +8,17 @@ router.get('/:userId', jobsController.getJobs, (req, res) =>
   })
 );
 
-router.post('/addJob', jobsController.postJob, (req, res) =>
+router.post('/new', jobsController.postJob, (req, res) =>
   res.status(200).json({
     job: res.locals.job,
   })
 );
 
-router.delete('/deleteJob/:jobId', jobsController.deleteJobs, (req, res) => {
+router.delete('/delete/:jobId', jobsController.deleteJobs, (req, res) => {
   res.status(200).send('Job Deleted');
 });
 
-router.put('/editJob/:jobId', jobsController.updateJob, (req, res) => {
+router.put('/edit/:jobId', jobsController.updateJob, (req, res) => {
   res.status(200).json({
     job: res.locals.job,
   });
