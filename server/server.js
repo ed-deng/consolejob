@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const jobsRouter = require('./routes/jobs');
 
 const app = express();
 
@@ -12,6 +13,8 @@ app.use('/build', express.static(path.join(__dirname, '../build')));
 app.get('/', (req, res) => {
   return res.status(200).sendFile(path.join(__dirname, '../client/index.html'));
 });
+
+app.use('/jobs', jobsRouter);
 
 // global error handler
 app.use((err, req, res, next) => {
