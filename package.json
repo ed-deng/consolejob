@@ -51,6 +51,8 @@
     "express": "^4.17.1",
     "html-webpack-plugin": "^4.5.1",
     "msw": "^0.26.2",
+    "passport": "^0.4.1",
+    "passport-github2": "^0.1.12",
     "pg": "^8.5.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
