@@ -37,6 +37,12 @@ app.use('/jobs', jobsRouter);
 app.use(passport.initialize());
 app.use(passport.session());
 
+// app.use(ensureAuthenticated);
+
+app.get('/account', function (req, res) {
+  res.render('account', { user: req.user });
+});
+
 passport.use(
   new GitHubStrategy(
     {
@@ -102,10 +108,6 @@ passport.use(
   )
 );
 
-// app.get('/account', ensureAuthenticated, function (req, res) {
-//   res.render('account', { user: req.user });
-// });
-
 // app.get('/login', function (req, res) {
 //   res.render('login', { user: req.user });
 // });
@@ -119,7 +121,7 @@ app.get(
   '/auth/github/callback',
   passport.authenticate('github', { failureRedirect: '/loginpage' }),
   function (req, res) {
-    res.redirect('/');
+    res.redirect('/board');
   }
 );
 
@@ -147,3 +149,15 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(3000, () => console.log(`Listening on PORT ${PORT}`));
+
+// Simple route middleware to ensure user is authenticated.
+//   Use this route middleware on any resource that needs to be protected.  If
+//   the request is authenticated (typically via a persistent login session),
+//   the request will proceed.  Otherwise, the user will be redirected to the
+//   login page.
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/loginpage');
+}

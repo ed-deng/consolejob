@@ -1,5 +1,11 @@
 import React, { useState, useContext, useReducer } from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+} from 'react-router-dom';
 import Header from './components/Header.jsx';
 import Footer from './components/Footer.jsx';
 import JobComponent from './components/JobComponent.jsx';
@@ -22,10 +28,13 @@ export default function App() {
           </li>
         </div>
         <Switch>
+          <Route exact path="/">
+            <Redirect to="/loginpage" />
+          </Route>
           <Route path="/loginpage">
             <LoginPage />
           </Route>
-          <Route path="/">
+          <Route path="/board">
             <div>
               <h1>Job Searching</h1>
               <button>Click me</button>
