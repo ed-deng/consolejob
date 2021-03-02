@@ -10,18 +10,31 @@ function JobComponent() {
   //   padding: "2rem",
   //   margin: "2rem",
   // };
-  const [jobz, setJobz] = useState(["Facebookz", "Googz"]);
+  const [jobz, setJobz] = useState(["Facebookz", "Googz", "Spotify"]);
+  const [stuff, setStuff] = useState(jobz);
+
+  function handleOnDragEnd(result) {
+    const items = Array.from(jobz);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+
+    setStuff(items);
+  }
 
   return (
     <div>
-      Hi there
-      <DragDropContext>
+      <DragDropContext onDragEnd={handleOnDragEnd}>
         <Droppable droppableId="jobs">
           {(provided) => (
             <ul {...provided.droppableProps} ref={provided.innerRef}>
-              {jobz.map((job, index) => {
+              Hi there
+              {stuff.map((job, index) => {
                 return (
-                  <Draggable draggableId={index.toString()} index={index}>
+                  <Draggable
+                    key={index}
+                    draggableId={index.toString()}
+                    index={index}
+                  >
                     {(provided) => (
                       <li
                         {...provided.draggableProps}
@@ -34,6 +47,7 @@ function JobComponent() {
                   </Draggable>
                 );
               })}
+              {provided.placeholder}
             </ul>
           )}
         </Droppable>
