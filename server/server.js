@@ -1,6 +1,8 @@
 const express = require('express');
 const path = require('path');
 const jobsRouter = require('./routes/jobs');
+const db = require('./db/model');
+// const cors = require('cors');
 
 const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } = require('../secret.js');
 const GitHubStrategy = require('passport-github2').Strategy;
@@ -12,53 +14,114 @@ const PORT = 3000;
 
 app.use(express.json());
 
-app.use('/build', express.static(path.join(__dirname, '../build')));
-
-app.get('/', (req, res) => {
-  return res.status(200).sendFile(path.join(__dirname, '../client/index.html'));
+passport.serializeUser(function (user, done) {
+  done(null, user);
 });
 
+passport.deserializeUser(function (obj, done) {
+  done(null, obj);
+});
+
+// const corsOptions = {
+// credentials: true,
+// };
+
+// app.use(cors(corsOptions));
+
+app.use('/build', express.static(path.join(__dirname, '../build')));
+
+app.use('/jobs', jobsRouter);
+
 /*******************************************************************************************************/
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+// app.use(ensureAuthenticated);
+
+app.get('/account', function (req, res) {
+  res.render('account', { user: req.user });
+});
+
 passport.use(
   new GitHubStrategy(
     {
       clientID: GITHUB_CLIENT_ID,
       clientSecret: GITHUB_CLIENT_SECRET,
-      callbackURL: 'http://127.0.0.1:3000/auth/github/callback',
+      callbackURL: 'http://localhost:8080/auth/github/callback',
     },
-    function (accessToken, refreshToken, profile, done) {
+    async function (accessToken, refreshToken, profile, done) {
       // asynchronous verification, for effect...
-      process.nextTick(function () {
-        console.log(profile);
-        // To keep the example simple, the user's GitHub profile is returned to
-        // represent the logged-in user.  In a typical application, you would want
-        // to associate the GitHub account with a user record in your database,
-        // and return that user instead.
-        return done(null, profile);
-      });
+      const findUser = 'SELECT * FROM users WHERE gh_id = $1';
+      const params = [profile.id];
+      let user = await db
+        .query(findUser, params)
+        .then((data) => data.rows[0])
+        .catch((err) => {
+          throw new Error(err);
+        });
+      if (!user) {
+        const createUser = `
+          INSERT INTO users (gh_id, username, profile_url, display_name, photo_url)
+          VALUES ($1, $2, $3, $4, $5)
+          RETURNING *
+        `;
+        const createUserParams = [
+          profile.id,
+          profile.username,
+          profile.profileUrl,
+          profile.displayName,
+          profile._json.avatar_url,
+        ];
+        user = await db
+          .query(createUser, createUserParams)
+          .then((data) => data.rows[0])
+          .catch((err) => {
+            throw new Error(err);
+            // return next({
+            //   log: `Express error handler caught in jobsController.editJobs ${err}`,
+            // });
+          });
+      } else {
+        const updateUser = `
+          UPDATE users
+          SET username = $2, profile_url = $3, display_name = $4, photo_url = $5
+          WHERE gh_id = $1
+          RETURNING *
+        `;
+        const updateUserParams = [
+          profile.id,
+          profile.profileUrl,
+          profile.username,
+          profile.displayName,
+          profile._json.avatar_url,
+        ];
+        user = await db
+          .query(updateUser, updateUserParams)
+          .then((data) => data.rows[0])
+          .catch((err) => {
+            throw new Error(err);
+          });
+      }
+      return done(null, user);
     }
   )
 );
 
-// app.get('/account', ensureAuthenticated, function (req, res) {
-//   res.render('account', { user: req.user });
+// app.get('/login', function (req, res) {
+//   res.render('login', { user: req.user });
 // });
-
-app.get('/login', function (req, res) {
-  res.render('login', { user: req.user });
-});
 
 app.get(
   '/auth/github',
-  passport.authenticate('github', { scope: ['user:email'] }),
-  function (req, res) {}
+  passport.authenticate('github', { scope: ['user:email'] })
 );
 
 app.get(
   '/auth/github/callback',
-  passport.authenticate('github', { failureRedirect: '/login' }),
+  passport.authenticate('github', { failureRedirect: '/loginpage' }),
   function (req, res) {
-    res.redirect('/');
+    res.redirect('/board');
   }
 );
 
@@ -69,7 +132,9 @@ app.get('/logout', function (req, res) {
 
 /*******************************************************************************************************/
 
-app.use('/jobs', jobsRouter);
+app.get('/*', (req, res) => {
+  res.status(200).sendFile(path.join(__dirname, '../client/index.html'));
+});
 
 // global error handler
 app.use((err, req, res, next) => {
@@ -84,3 +149,15 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(3000, () => console.log(`Listening on PORT ${PORT}`));
+
+// Simple route middleware to ensure user is authenticated.
+//   Use this route middleware on any resource that needs to be protected.  If
+//   the request is authenticated (typically via a persistent login session),
+//   the request will proceed.  Otherwise, the user will be redirected to the
+//   login page.
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/loginpage');
+}
