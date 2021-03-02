@@ -20,7 +20,7 @@ export default function App() {
   return (
     <TestContext.Provider value={test}>
       <div>
-        <h1>prevTest</h1>
+        <h1>Job Searching</h1>
         <button onClick={toggleTest}>Click me</button>
         <Header />
         <JobComponent />
