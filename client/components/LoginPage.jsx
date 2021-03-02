@@ -1,21 +1,23 @@
 import React from 'react';
 
 export default function HomePage() {
-  const signIn = () => {
-    fetch('/auth/github/callback', { mode: 'no-cors' })
-      .then((res, err) => {
-        if (err) console.log(err);
-        else console.log('success');
-      })
-      .catch((err) => console.log(err));
-  };
+  // const signIn = () => {
+  //   fetch('/auth/github/callback', { mode: 'no-cors' })
+  //     .then((res, err) => {
+  //       if (err) console.log(err);
+  //       else console.log('success');
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
   return (
     <div className="loginContainer">
       <h1>LOGIN PAGE</h1>
       <div className="loginInnerContainer">
-        <button className="loginButton" onClick={signIn}>
-          Sign In With GitHub
-        </button>
+        <a href='/auth/github/callback'>
+          <button className="loginButton">
+            Sign In With GitHub
+          </button>
+        </a>
       </div>
     </div>
   );
