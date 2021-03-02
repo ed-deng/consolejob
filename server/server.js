@@ -14,13 +14,11 @@ const PORT = 3000;
 
 app.use(express.json());
 
-
-
-passport.serializeUser(function(user, done) {
+passport.serializeUser(function (user, done) {
   done(null, user);
 });
 
-passport.deserializeUser(function(obj, done) {
+passport.deserializeUser(function (obj, done) {
   done(null, obj);
 });
 
@@ -48,28 +46,58 @@ passport.use(
     },
     async function (accessToken, refreshToken, profile, done) {
       // asynchronous verification, for effect...
-      // const findUser = 'SELECT * FROM users WHERE oAuthID = $1';
-      // const params = [profile.id];
-      // let user = await db.query(findUser, params).then(data => data.rows[0]);
-      // if (!user) {
-      //   const createUser = `
-      //     INSERT INTO users (oauth_id, username, display_name, photo_url)
-      //     VALUES ($1, $2, $3, $4)
-      //     RETURNING *
-      //   `;
-      //   const createUserParams = [profile.id, profile.username, profile.displayName, profile.avatar_url];
-      //   user = await db.query(createUser, createUserParams).then(data => data.rows[0]);
-      // }
-      // return done(null, user);
-
-      process.nextTick(function () {
-        console.log(profile);
-        // To keep the example simple, the user's GitHub profile is returned to
-        // represent the logged-in user.  In a typical application, you would want
-        // to associate the GitHub account with a user record in your database,
-        // and return that user instead.
-        return done(null, profile);
-      });
+      const findUser = 'SELECT * FROM users WHERE gh_id = $1';
+      const params = [profile.id];
+      let user = await db
+        .query(findUser, params)
+        .then((data) => data.rows[0])
+        .catch((err) => {
+          throw new Error(err);
+        });
+      if (!user) {
+        const createUser = `
+          INSERT INTO users (gh_id, username, profile_url, display_name, photo_url)
+          VALUES ($1, $2, $3, $4, $5)
+          RETURNING *
+        `;
+        const createUserParams = [
+          profile.id,
+          profile.username,
+          profile.profileUrl,
+          profile.displayName,
+          profile._json.avatar_url,
+        ];
+        user = await db
+          .query(createUser, createUserParams)
+          .then((data) => data.rows[0])
+          .catch((err) => {
+            throw new Error(err);
+            // return next({
+            //   log: `Express error handler caught in jobsController.editJobs ${err}`,
+            // });
+          });
+      } else {
+        const updateUser = `
+          UPDATE users
+          SET username = $2, profile_url = $3, display_name = $4, photo_url = $5
+          WHERE gh_id = $1
+          RETURNING *
+        `;
+        const updateUserParams = [
+          profile.id,
+          profile.profileUrl,
+          profile.username,
+          profile.displayName,
+          profile._json.avatar_url,
+        ];
+        user = await db
+          .query(updateUser, updateUserParams)
+          .then((data) => data.rows[0])
+          .catch((err) => {
+            throw new Error(err);
+          });
+      }
+      return done(null, user);
     }
   )
 );
