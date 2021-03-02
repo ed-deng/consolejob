@@ -14,6 +14,27 @@ export const initialAppliedState = {
       questions: "",
       notes: "",
     },
+    {
+      company: "Google",
+      position: "",
+      status: "",
+      questions: "",
+      notes: "",
+    },
+    {
+      company: "Microsoft",
+      position: "",
+      status: "",
+      questions: "",
+      notes: "",
+    },
+    {
+      company: "Bloomberg",
+      position: "",
+      status: "",
+      questions: "",
+      notes: "",
+    },
   ],
 };
 export const initialInProgressState = {
