@@ -11,7 +11,9 @@ SET row_security = off;
 
 CREATE TABLE public.users (
   "_id" serial NOT NULL,
+  "gh_id" bigint NOT NULL,
   "username" varchar NOT NULL,
+  "profile_url" varchar NOT NULL,
   "display_name" varchar,
   "photo_url" varchar,
   CONSTRAINT "users_pk" PRIMARY KEY ("_id")
