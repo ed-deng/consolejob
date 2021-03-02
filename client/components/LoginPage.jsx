@@ -1,30 +1,18 @@
 import React from 'react';
+import { GithubLoginButton } from 'react-social-login-buttons';
 
 export default function HomePage() {
-  // const signIn = () => {
-  //   fetch('/auth/github/callback', { mode: 'no-cors' })
-  //     .then((res, err) => {
-  //       if (err) console.log(err);
-  //       else console.log('success');
-  //     })
-  //     .catch((err) => console.log(err));
-  // };
   return (
     <div className="loginContainer">
-      <h1>LOGIN PAGE</h1>
+      <h1>Login With GitHub</h1>
       <div className="loginInnerContainer">
-        <a href='/auth/github/callback'>
-          <button className="loginButton">
-            Sign In With GitHub
-          </button>
+        <a href="/auth/github/callback">
+          <GithubLoginButton
+            className="loginButton"
+            onClick={() => alert('Logged In!')}
+          />
         </a>
       </div>
     </div>
   );
 }
-
-// auth/github/callback =>
-// https://localhost:3000/auth/github/callback?error=redirect_uri_mismatch&error_description=The+redirect_uri+MUST+match+the+registered+callback+URL+for+this+application.&error_uri=https%3A%2F%2Fdocs.github.com%2Fapps%2Fmanaging-oauth-apps%2Ftroubleshooting-authorization-request-errors%2F%23redirect-uri-mismatch
-
-// auth/github/callback =>
-// https://localhost:3000/auth/github/callback?error=redirect_uri_mismatch&error_description=The+redirect_uri+MUST+match+the+registered+callback+URL+for+this+application.&error_uri=https%3A%2F%2Fdocs.github.com%2Fapps%2Fmanaging-oauth-apps%2Ftroubleshooting-authorization-request-errors%2F%23redirect-uri-mismatch

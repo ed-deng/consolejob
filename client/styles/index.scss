@@ -1,1 +1,11 @@
 @import './login.scss';
+@import './fonts';
+
+body {
+  font-family: 'Source Code Pro';
+  background-color: #282a36;
+}
+
+a {
+  text-decoration: none;
+}
