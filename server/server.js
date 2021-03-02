@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const jobsRouter = require('./routes/jobs');
+// const cors = require('cors');
 
 const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } = require('../secret.js');
 const GitHubStrategy = require('passport-github2').Strategy;
@@ -12,11 +13,15 @@ const PORT = 3000;
 
 app.use(express.json());
 
+// const corsOptions = {
+// credentials: true,
+// };
+
+// app.use(cors(corsOptions));
+
 app.use('/build', express.static(path.join(__dirname, '../build')));
 
-app.get('/', (req, res) => {
-  return res.status(200).sendFile(path.join(__dirname, '../client/index.html'));
-});
+app.use('/jobs', jobsRouter);
 
 /*******************************************************************************************************/
 passport.use(
@@ -24,7 +29,7 @@ passport.use(
     {
       clientID: GITHUB_CLIENT_ID,
       clientSecret: GITHUB_CLIENT_SECRET,
-      callbackURL: 'http://127.0.0.1:3000/auth/github/callback',
+      callbackURL: 'http://localhost:3000/auth/github/callback',
     },
     function (accessToken, refreshToken, profile, done) {
       // asynchronous verification, for effect...
@@ -44,19 +49,18 @@ passport.use(
 //   res.render('account', { user: req.user });
 // });
 
-app.get('/login', function (req, res) {
-  res.render('login', { user: req.user });
-});
+// app.get('/login', function (req, res) {
+//   res.render('login', { user: req.user });
+// });
 
 app.get(
   '/auth/github',
-  passport.authenticate('github', { scope: ['user:email'] }),
-  function (req, res) {}
+  passport.authenticate('github', { scope: ['user:email'] })
 );
 
 app.get(
   '/auth/github/callback',
-  passport.authenticate('github', { failureRedirect: '/login' }),
+  passport.authenticate('github', { failureRedirect: '/loginpage' }),
   function (req, res) {
     res.redirect('/');
   }
@@ -69,7 +73,9 @@ app.get('/logout', function (req, res) {
 
 /*******************************************************************************************************/
 
-app.use('/jobs', jobsRouter);
+app.get('/*', (req, res) => {
+  res.status(200).sendFile(path.join(__dirname, '../client/index.html'));
+});
 
 // global error handler
 app.use((err, req, res, next) => {
