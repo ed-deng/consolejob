@@ -60,7 +60,7 @@ module.exports = {
         target: 'http://localhost:3000/',
         secure: false,
       },
-      '/auth/github/callback': {
+      '/auth/github/callback/*': {
         target: 'http://localhost:3000/',
         secure: false,
       },

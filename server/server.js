@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const jobsRouter = require('./routes/jobs');
+const db = require('./db/model');
 // const cors = require('cors');
 
 const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } = require('../secret.js');
@@ -13,6 +14,16 @@ const PORT = 3000;
 
 app.use(express.json());
 
+
+
+passport.serializeUser(function(user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function(obj, done) {
+  done(null, obj);
+});
+
 // const corsOptions = {
 // credentials: true,
 // };
@@ -24,15 +35,33 @@ app.use('/build', express.static(path.join(__dirname, '../build')));
 app.use('/jobs', jobsRouter);
 
 /*******************************************************************************************************/
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 passport.use(
   new GitHubStrategy(
     {
       clientID: GITHUB_CLIENT_ID,
       clientSecret: GITHUB_CLIENT_SECRET,
-      callbackURL: 'http://localhost:3000/auth/github/callback',
+      callbackURL: 'http://localhost:8080/auth/github/callback',
     },
-    function (accessToken, refreshToken, profile, done) {
+    async function (accessToken, refreshToken, profile, done) {
       // asynchronous verification, for effect...
+      // const findUser = 'SELECT * FROM users WHERE oAuthID = $1';
+      // const params = [profile.id];
+      // let user = await db.query(findUser, params).then(data => data.rows[0]);
+      // if (!user) {
+      //   const createUser = `
+      //     INSERT INTO users (oauth_id, username, display_name, photo_url)
+      //     VALUES ($1, $2, $3, $4)
+      //     RETURNING *
+      //   `;
+      //   const createUserParams = [profile.id, profile.username, profile.displayName, profile.avatar_url];
+      //   user = await db.query(createUser, createUserParams).then(data => data.rows[0]);
+      // }
+      // return done(null, user);
+
       process.nextTick(function () {
         console.log(profile);
         // To keep the example simple, the user's GitHub profile is returned to
