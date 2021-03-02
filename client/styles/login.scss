@@ -1,13 +1,18 @@
 .loginContainer {
-  border: 1px solid black;
+  margin-top: 20vh !important;
+  background-color: rgba(255, 255, 255, 0.9);
   width: 50vh;
   margin: 0 auto;
-
+  height: 20vh;
+  box-shadow: 2px 4px 25px rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(0, 0, 0, 0.01);
+  border-radius: 25px;
   h1 {
+    margin-top: 10%;
     text-align: center;
   }
+
   .loginInnerContainer {
-    border: 1px solid black;
     width: 50%;
     margin: 0 auto;
   }
