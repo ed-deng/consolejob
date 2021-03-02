@@ -1,6 +1,5 @@
 import React, { useReducer, useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import JobCard from "./JobCard.jsx";
 import {
   initialAppliedState,
   updateAppliedStateReducer,
