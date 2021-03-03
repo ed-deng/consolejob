@@ -85,58 +85,142 @@ export default function App() {
                 >
                   {Object.entries(jobColumn).map(([id, column]) => {
                     return (
-                      <Droppable droppableId={id} key={id}>
-                        {(provided, snapshot) => {
-                          return (
-                            <div
-                              {...provided.droppableProps}
-                              ref={provided.innerRef}
-                              style={{
-                                background: snapshot.isDraggingOver
-                                  ? "lightblue"
-                                  : "lightgrey",
-                                padding: 4,
-                                width: 250,
-                                minHeight: 500,
-                              }}
-                            >
-                              {column.items.map((item, index) => {
-                                return (
-                                  <Draggable
-                                    key={item.company}
-                                    draggableId={item.company}
-                                    index={index}
-                                  >
-                                    {(provided, snapshot) => {
-                                      return (
-                                        <div
-                                          ref={provided.innerRef}
-                                          {...provided.draggableProps}
-                                          {...provided.dragHandleProps}
-                                          style={{
-                                            userSelect: "none",
-                                            padding: 16,
-                                            margin: "0 0 8px 0",
-                                            minHeight: "50px",
-                                            backgroundColor: snapshot.isDragging
-                                              ? "#263B4A"
-                                              : "#456C86",
-                                            color: "white",
-                                            ...provided.draggableProps.style,
-                                          }}
-                                        >
-                                          {item.company}
-                                        </div>
-                                      );
-                                    }}
-                                  </Draggable>
-                                );
-                              })}
-                              {provided.placeholder}
-                            </div>
-                          );
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
                         }}
-                      </Droppable>
+                      >
+                        <h2>{column.name}</h2>
+                        <div style={{ margin: 8 }}>
+                          <Droppable droppableId={id} key={id}>
+                            {(provided, snapshot) => {
+                              return (
+                                <div
+                                  {...provided.droppableProps}
+                                  ref={provided.innerRef}
+                                  style={{
+                                    background: snapshot.isDraggingOver
+                                      ? "lightblue"
+                                      : "lightgrey",
+                                    padding: 4,
+                                    width: 250,
+                                    minHeight: 500,
+                                  }}
+                                >
+                                  {column.items.map((item, index) => {
+                                    return (
+                                      <Draggable
+                                        key={item.company}
+                                        draggableId={item.company}
+                                        index={index}
+                                      >
+                                        {(provided, snapshot) => {
+                                          if (column.name === "Applied") {
+                                            return (
+                                              <div
+                                                ref={provided.innerRef}
+                                                {...provided.draggableProps}
+                                                {...provided.dragHandleProps}
+                                                style={{
+                                                  userSelect: "none",
+                                                  padding: 16,
+                                                  margin: "0 0 8px 0",
+                                                  minHeight: "50px",
+                                                  backgroundColor: snapshot.isDragging
+                                                    ? "#263B4A"
+                                                    : "#456C86",
+                                                  color: "white",
+                                                  ...provided.draggableProps
+                                                    .style,
+                                                }}
+                                              >
+                                                {item.company}
+                                              </div>
+                                            );
+                                          } else if (
+                                            column.name === "In Progress"
+                                          ) {
+                                            return (
+                                              <div
+                                                ref={provided.innerRef}
+                                                {...provided.draggableProps}
+                                                {...provided.dragHandleProps}
+                                                style={{
+                                                  userSelect: "none",
+                                                  padding: 16,
+                                                  margin: "0 0 8px 0",
+                                                  minHeight: "50px",
+                                                  backgroundColor: snapshot.isDragging
+                                                    ? "#d98124"
+                                                    : "orange",
+                                                  color: "white",
+                                                  ...provided.draggableProps
+                                                    .style,
+                                                }}
+                                              >
+                                                {item.company}
+                                              </div>
+                                            );
+                                          } else if (
+                                            column.name === "Completed"
+                                          ) {
+                                            return (
+                                              <div
+                                                ref={provided.innerRef}
+                                                {...provided.draggableProps}
+                                                {...provided.dragHandleProps}
+                                                style={{
+                                                  userSelect: "none",
+                                                  padding: 16,
+                                                  margin: "0 0 8px 0",
+                                                  minHeight: "50px",
+                                                  backgroundColor: snapshot.isDragging
+                                                    ? "#164d08"
+                                                    : "green",
+                                                  color: "white",
+                                                  ...provided.draggableProps
+                                                    .style,
+                                                }}
+                                              >
+                                                {item.company}
+                                              </div>
+                                            );
+                                          } else if (column.name === "Saved") {
+                                            return (
+                                              <div
+                                                ref={provided.innerRef}
+                                                {...provided.draggableProps}
+                                                {...provided.dragHandleProps}
+                                                style={{
+                                                  userSelect: "none",
+                                                  padding: 16,
+                                                  margin: "0 0 8px 0",
+                                                  minHeight: "50px",
+                                                  backgroundColor: snapshot.isDragging
+                                                    ? "#a61e00"
+                                                    : "#ff2f00",
+                                                  color: "white",
+                                                  ...provided.draggableProps
+                                                    .style,
+                                                }}
+                                              >
+                                                {item.company}
+                                              </div>
+                                            );
+                                          }
+                                        }}
+                                      </Draggable>
+                                    );
+                                  })}
+                                  {provided.placeholder}
+                                </div>
+                              );
+                            }}
+                          </Droppable>
+                        </div>
+                      </div>
                     );
                   })}
                 </DragDropContext>
