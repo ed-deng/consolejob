@@ -115,6 +115,10 @@ function Board() {
                                       }}
                                     >
                                       {item.company}
+                                      <div>
+                                        <button>View card</button>
+                                        <button>Delete card</button>
+                                      </div>
                                     </div>
                                   );
                                 } else if (column.name === "In Progress") {
@@ -136,6 +140,10 @@ function Board() {
                                       }}
                                     >
                                       {item.company}
+                                      <div>
+                                        <button>View card</button>
+                                        <button>Delete card</button>
+                                      </div>
                                     </div>
                                   );
                                 } else if (column.name === "Completed") {
@@ -157,6 +165,10 @@ function Board() {
                                       }}
                                     >
                                       {item.company}
+                                      <div>
+                                        <button>View card</button>
+                                        <button>Delete card</button>
+                                      </div>
                                     </div>
                                   );
                                 } else if (column.name === "Saved") {
@@ -178,6 +190,10 @@ function Board() {
                                       }}
                                     >
                                       {item.company}
+                                      <div>
+                                        <button>View card</button>
+                                        <button>Delete card</button>
+                                      </div>
                                     </div>
                                   );
                                 }

@@ -1,7 +1,7 @@
 import React from "react";
 
 function Column() {
-  return <div>Test shits</div>;
+  return <div>Test</div>;
 }
 
 export default Column;

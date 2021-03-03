@@ -89,26 +89,24 @@ export const userInfoState = {
   email: "",
 };
 
-export const updateApplied = (state, action) => {
-  switch (action.type) {
-    case "ADD_APPLIED":
-      state.tables.push(action.payload);
-  }
-};
+// export const updateApplied = (state, action) => {
+//   switch (action.type) {
+//     case "ADD_APPLIED":
+//       state.tables.push(action.payload);
+//   }
+// };
 
 export const updateAppliedStateReducer = (state, action) => {
   switch (action.type) {
-    case "UPDATE_TEST":
+    case "APPLIED":
       return {
-        ...state,
-        boolean: !state.boolean,
+        state: state.tables.push(action.payload),
       };
     default: {
       return state;
     }
   }
 };
-
 export const updateInProgressStateReducer = (state, action) => {
   switch (action.type) {
     case "UPDATE_TEST":
@@ -148,6 +146,11 @@ export const updateSavedStateReducer = (state, action) => {
 
 export const columnsReducer = (state, action) => {
   switch (action.type) {
+    case "APPLIED":
+      return {
+        ...state,
+        tables: action.payload,
+      };
     default: {
       return state;
     }
