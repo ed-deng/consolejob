@@ -73,7 +73,13 @@ export default function App() {
           <Route path="/board">
             <div>
               <Header />
-              <div style={{ display: "flex" }}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "center",
+                }}
+              >
                 <DragDropContext
                   onDragEnd={(result) =>
                     onDragEnd(result, jobColumn, setColumns)
@@ -88,7 +94,7 @@ export default function App() {
                           alignItems: "center",
                         }}
                       >
-                        <h2>{column.name}</h2>
+                        <h2 style={{ color: "white" }}>{column.name}</h2>
                         <div style={{ margin: 8 }}>
                           <Droppable droppableId={id} key={id}>
                             {(provided, snapshot) => {
