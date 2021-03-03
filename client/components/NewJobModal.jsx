@@ -1,13 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState, useReducer } from 'react'
+import { updateAppliedStateReducer, initialAppliedState } from '../state/reducers'
 
-export default function NewJobModal({ updateShowModal }) {
+
+export default function NewJobModal({ updateShowModal, jobColumn, setColumns }) {
   const [company, updateCompany] = useState('');
   const [position, updatePosition] = useState('');
   const [listing, updateListing] = useState('');
   const [applicationStatus, updateStatus] = useState('Saved');
   const [questions, updateQuestions] = useState('');
   const [notes, updateNotes] = useState('');
+  const [appliedJob, appliedDispatch] = useReducer(updateAppliedStateReducer, initialAppliedState)
 
+  
   const resetState = () => {
     updateCompany('');
     updatePosition('');
@@ -28,15 +32,28 @@ export default function NewJobModal({ updateShowModal }) {
       questions,
       notes
     }
+    console.log('appliedJob: ', appliedJob);
     fetch(`/jobs/new`, 
       { method: 'POST', 
         headers: { 'Content-Type': 'Application/JSON' }, 
         body: JSON.stringify(body) 
       })
       .then((res) => res.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        const columnsCopy = JSON.parse(JSON.stringify(jobColumn));
+        Object.keys(columnsCopy).forEach(key => {
+          if (columnsCopy[key].name === data.job.status) {
+            columnsCopy[key].items.push(data.job);
+          }
+        })
+        setColumns(columnsCopy);
+        // if (data.job.status === 'Applied') {
+        //   setColumns()
+        // }
+        updateShowModal(false);
+        
+      });
     resetState();
-    updateShowModal(false);
   }
 
   return (
@@ -55,7 +72,7 @@ export default function NewJobModal({ updateShowModal }) {
         <option value="Saved">Saved</option>
         <option value="Applied">Applied</option>
         <option value="In Progress">In Progress</option>
-        <option value="Complete">Complete</option>
+        <option value="Completed">Completed</option>
       </select><br />
       <label htmlFor='questions'>Questions:</label><br />
       <textarea name='questions' value={questions}
