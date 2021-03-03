@@ -1,6 +1,13 @@
 import React from "react";
 
-function Header() {
+function Header(props) {
+  const {
+    username,
+    gh_id,
+    profile_url,
+    display_name,
+    photo_url,
+  } = props.userInfo;
   return (
     <div>
       <h1
@@ -11,8 +18,12 @@ function Header() {
           marginBottom: "4rem",
         }}
       >
-        ConsoleJob <br />
+        ConsoleJob
       </h1>
+      <div className="userInfo">
+        <img className="profilePic" src={photo_url} alt="Profile Pic" />
+        <p className="displayName">{display_name}</p>
+      </div>
     </div>
   );
 }

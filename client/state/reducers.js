@@ -99,11 +99,22 @@ export const userInfoState = {
 export const updateAppliedStateReducer = (state, action) => {
   switch (action.type) {
     case "APPLIED":
+<<<<<<< HEAD
       return {
         state: state.tables.push(action.payload),
+=======
+      console.log(state, 'state')
+      console.log(action, 'action')
+      return {
+        ...state,
+        tables: action.payload
+>>>>>>> c3cc21354408d089244c26d0cec6c1fc4633fead
       };
     default: {
-      return state;
+      return {
+        ...state,
+        tables: action.payload
+      };
     }
   }
 };
@@ -156,3 +167,25 @@ export const columnsReducer = (state, action) => {
     }
   }
 };
+
+/*
+export const columns = {
+  1: {
+    name: "Applied",
+    items: initialAppliedState.tables,
+  },
+  2: {
+    name: "In Progress",
+    items: initialInProgressState.tables,
+  },
+  3: {
+    name: "Completed",
+    items: initialCompletedState.tables,
+  },
+  4: {
+    name: "Saved",
+    items: initialSavedState.tables,
+  },
+};
+
+*/
