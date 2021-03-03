@@ -1,5 +1,5 @@
-import React from 'react';
-import { GithubLoginButton } from 'react-social-login-buttons';
+import React from "react";
+import { GithubLoginButton } from "react-social-login-buttons";
 
 export default function HomePage() {
   return (
@@ -7,10 +7,7 @@ export default function HomePage() {
       <h1>Login With GitHub</h1>
       <div className="loginInnerContainer">
         <a href="/auth/github/callback">
-          <GithubLoginButton
-            className="loginButton"
-            onClick={() => alert('Logged In!')}
-          />
+          <GithubLoginButton className="loginButton" />
         </a>
       </div>
     </div>

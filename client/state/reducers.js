@@ -81,9 +81,6 @@ export const columns = {
     items: initialSavedState.tables,
   },
 };
-// export const initialTestContext = {
-//   boolean: false,
-// };
 
 export const userInfoState = {
   username: "",
@@ -98,19 +95,6 @@ export const updateApplied = (state, action) => {
       state.tables.push(action.payload);
   }
 };
-
-// export const updateTestReducer = (state, action) => {
-//   switch (action.type) {
-//     case "UPDATE_TEST":
-//       return {
-//         ...state,
-//         boolean: !state.boolean,
-//       };
-//     default: {
-//       return state;
-//     }
-//   }
-// };
 
 export const updateAppliedStateReducer = (state, action) => {
   switch (action.type) {
