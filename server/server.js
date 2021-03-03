@@ -2,10 +2,9 @@ const express = require("express");
 const path = require("path");
 const jobsRouter = require("./routes/jobs");
 const db = require("./db/model");
-const session = require("express-session");
 // const cors = require('cors');
 
-const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, SESSION_SECRET } = require("../secret.js");
+const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } = require("../secret.js");
 const GitHubStrategy = require("passport-github2").Strategy;
 const passport = require("passport");
 
@@ -22,6 +21,12 @@ passport.serializeUser(function (user, done) {
 passport.deserializeUser(function (obj, done) {
   done(null, obj);
 });
+//
+// const corsOptions = {
+// credentials: true,
+// };
+
+// app.use(cors(corsOptions));
 
 app.use("/build", express.static(path.join(__dirname, "../build")));
 
@@ -29,27 +34,13 @@ app.use("/jobs", jobsRouter);
 
 /*******************************************************************************************************/
 
-app.use(session({ 
-  secret: SESSION_SECRET,
-  resave: true,
-  saveUninitialized: true
- }));
 app.use(passport.initialize());
 app.use(passport.session());
 
+// app.use(ensureAuthenticated);
+
 app.get("/account", function (req, res) {
   res.render("account", { user: req.user });
-});
-
-app.get('/user', (req,res,next) => {
-  console.log('in /user');
-  if (!req.session.passport) {
-    console.log('error ocurred')
-    res.status(300).send('no user found');
-  } else {
-    console.log('no error')
-    res.status(200).json(req.session.passport.user)
-  }
 });
 
 passport.use(
@@ -130,10 +121,7 @@ app.get(
   "/auth/github/callback",
   passport.authenticate("github", { failureRedirect: "/loginpage" }),
   function (req, res) {
-    req.logIn(req.user, (err) => {
-      if (err) return next(err);
-      res.redirect("/board");
-    })
+    res.redirect("/board");
   }
 );
 

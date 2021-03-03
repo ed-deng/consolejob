@@ -52,7 +52,6 @@
     "enzyme-adapter-react-16": "^1.15.6",
     "eslint-plugin-react": "^7.22.0",
     "express": "^4.17.1",
-    "express-session": "^1.17.1",
     "html-webpack-plugin": "^4.5.1",
     "msw": "^0.26.2",
     "passport": "^0.4.1",
