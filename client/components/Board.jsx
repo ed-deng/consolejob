@@ -67,7 +67,12 @@ function Board({ userInfo }) {
         justifyContent: "center",
       }}
     >
-      <button onClick={() => updateShowModal(!showModal)}>Add New</button>
+      <button
+        onClick={() => updateShowModal(!showModal)}
+        style={{ width: "4rem", height: "3rem" }}
+      >
+        Add New
+      </button>
       {showModal ? (
         <NewJobModal
           userInfo={userInfo}
@@ -202,7 +207,7 @@ function Board({ userInfo }) {
                                         margin: "0 0 8px 0",
                                         minHeight: "50px",
                                         backgroundColor: snapshot.isDragging
-                                          ? "#a61e00"
+                                          ? "#964259"
                                           : "#cd5d7d",
                                         color: "white",
                                         ...provided.draggableProps.style,

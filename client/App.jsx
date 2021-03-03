@@ -15,7 +15,9 @@ export default function App() {
   const [userInfo, setUserInfo] = useState({});
 
   useEffect(() => {
-    fetch("/user", { headers: { "cache-control": "no-cache" } })
+    fetch("/user", {
+      headers: { "cache-control": "no-cache" },
+    })
       .then((res) => res.json())
       .then((data) => {
         setUserInfo(data);
