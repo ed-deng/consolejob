@@ -1,7 +1,7 @@
-import React, { useState, useReducer, useEffect } from "react";
-import { columns, columnsReducer } from "../state/reducers";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import NewJobModal from "./NewJobModal.jsx";
+import React, { useState, useReducer, useEffect } from 'react';
+import { columns, columnsReducer } from '../state/reducers';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import NewJobModal from './NewJobModal.jsx';
 
 const onDragEnd = (result, jobColumn, setColumns) => {
   if (!result.destination) return;
@@ -40,28 +40,24 @@ const onDragEnd = (result, jobColumn, setColumns) => {
   }
 };
 
-function Board() {
+function Board({ userInfo }) {
   const [prevJobColumn, prevJobDispatch] = useReducer(columnsReducer, columns);
   const [jobColumn, setColumns] = useState(prevJobColumn);
   const [showModal, updateShowModal] = useState(false);
 
-  useEffect(() => {
-    console.log('hitting useEffect')
-    fetch('/user').then(res => res.json()).then(data => console.log(data))
-  }, []);
-
   return (
     <div
       style={{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "center",
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
       }}
     >
       <button onClick={() => updateShowModal(!showModal)}>Add New</button>
       {showModal ? (
-        <NewJobModal 
-          updateShowModal={updateShowModal} 
+        <NewJobModal
+          userInfo={userInfo}
+          updateShowModal={updateShowModal}
           jobColumn={jobColumn}
           setColumns={setColumns}
         />
@@ -75,12 +71,12 @@ function Board() {
           return (
             <div
               style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
               }}
             >
-              <h2 style={{ color: "white" }}>{column.name}</h2>
+              <h2 style={{ color: 'white' }}>{column.name}</h2>
               <div style={{ margin: 8 }}>
                 <Droppable droppableId={id} key={id}>
                   {(provided, snapshot) => {
@@ -89,9 +85,11 @@ function Board() {
                         {...provided.droppableProps}
                         ref={provided.innerRef}
                         style={{
-                          background: snapshot.isDraggingOver ? "lightblue" : "lightgrey",
+                          background: snapshot.isDraggingOver
+                            ? 'lightblue'
+                            : 'lightgrey',
                           padding: 4,
-                          width: 250, 
+                          width: 250,
                           minHeight: 500,
                         }}
                       >
@@ -103,96 +101,104 @@ function Board() {
                               index={index}
                             >
                               {(provided, snapshot) => {
-                                if (column.name === "Applied") {
+                                if (column.name === 'Applied') {
                                   return (
                                     <div
                                       ref={provided.innerRef}
                                       {...provided.draggableProps}
                                       {...provided.dragHandleProps}
                                       style={{
-                                        userSelect: "none",
+                                        userSelect: 'none',
                                         padding: 16,
-                                        margin: "0 0 8px 0",
-                                        minHeight: "50px",
-                                        backgroundColor: snapshot.isDragging ? "#263B4A" : "#a1cae2",
-                                        color: "white",
+                                        margin: '0 0 8px 0',
+                                        minHeight: '50px',
+                                        backgroundColor: snapshot.isDragging
+                                          ? '#263B4A'
+                                          : '#a1cae2',
+                                        color: 'white',
                                         ...provided.draggableProps.style,
                                       }}
                                     >
                                       {item.company}
                                       <div>
-                                      <button>View card</button>
-                                      <button>Delete card</button>
-                                    </div>
+                                        <button>View card</button>
+                                        <button>Delete card</button>
+                                      </div>
                                     </div>
                                   );
-                                } else if (column.name === "In Progress") {
+                                } else if (column.name === 'In Progress') {
                                   return (
                                     <div
                                       ref={provided.innerRef}
                                       {...provided.draggableProps}
                                       {...provided.dragHandleProps}
                                       style={{
-                                        userSelect: "none",
+                                        userSelect: 'none',
                                         padding: 16,
-                                        margin: "0 0 8px 0",
-                                        minHeight: "50px",
-                                        backgroundColor: snapshot.isDragging ? "#d98124" : "#f69e7b",
-                                        color: "white",
+                                        margin: '0 0 8px 0',
+                                        minHeight: '50px',
+                                        backgroundColor: snapshot.isDragging
+                                          ? '#d98124'
+                                          : '#f69e7b',
+                                        color: 'white',
                                         ...provided.draggableProps.style,
                                       }}
                                     >
                                       {item.company}
                                       <div>
-                                      <button>View card</button>
-                                      <button>Delete card</button>
-                                    </div>
+                                        <button>View card</button>
+                                        <button>Delete card</button>
+                                      </div>
                                     </div>
                                   );
-                                } else if (column.name === "Completed") {
+                                } else if (column.name === 'Completed') {
                                   return (
                                     <div
                                       ref={provided.innerRef}
                                       {...provided.draggableProps}
                                       {...provided.dragHandleProps}
                                       style={{
-                                        userSelect: "none",
+                                        userSelect: 'none',
                                         padding: 16,
-                                        margin: "0 0 8px 0",
-                                        minHeight: "50px",
-                                        backgroundColor: snapshot.isDragging ? "#164d08" : "#70af85",
-                                        color: "white",
+                                        margin: '0 0 8px 0',
+                                        minHeight: '50px',
+                                        backgroundColor: snapshot.isDragging
+                                          ? '#164d08'
+                                          : '#70af85',
+                                        color: 'white',
                                         ...provided.draggableProps.style,
                                       }}
                                     >
                                       {item.company}
                                       <div>
-                                      <button>View card</button>
-                                      <button>Delete card</button>
-                                    </div>
+                                        <button>View card</button>
+                                        <button>Delete card</button>
+                                      </div>
                                     </div>
                                   );
-                                } else if (column.name === "Saved") {
+                                } else if (column.name === 'Saved') {
                                   return (
                                     <div
                                       ref={provided.innerRef}
                                       {...provided.draggableProps}
                                       {...provided.dragHandleProps}
                                       style={{
-                                        userSelect: "none",
+                                        userSelect: 'none',
                                         padding: 16,
-                                        margin: "0 0 8px 0",
-                                        minHeight: "50px",
-                                        backgroundColor: snapshot.isDragging ? "#a61e00" : "#cd5d7d",
-                                        color: "white",
+                                        margin: '0 0 8px 0',
+                                        minHeight: '50px',
+                                        backgroundColor: snapshot.isDragging
+                                          ? '#a61e00'
+                                          : '#cd5d7d',
+                                        color: 'white',
                                         ...provided.draggableProps.style,
                                       }}
                                     >
                                       {item.company}
                                       <div>
-                                      <button>View card</button>
-                                      <button>Delete card</button>
-                                    </div>
+                                        <button>View card</button>
+                                        <button>Delete card</button>
+                                      </div>
                                     </div>
                                   );
                                 }
