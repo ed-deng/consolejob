@@ -22,13 +22,6 @@ export const initialAppliedState = {
       notes: "",
     },
     {
-      company: "Microsoft",
-      position: "",
-      status: "",
-      questions: "",
-      notes: "",
-    },
-    {
       company: "Bloomberg",
       position: "",
       status: "",
@@ -70,10 +63,24 @@ export const initialSavedState = {
     },
   ],
 };
-
-// export const initialTestContext = {
-//   boolean: false,
-// };
+export const columns = {
+  1: {
+    name: "Applied",
+    items: initialAppliedState.tables,
+  },
+  2: {
+    name: "In Progress",
+    items: initialInProgressState.tables,
+  },
+  3: {
+    name: "Completed",
+    items: initialCompletedState.tables,
+  },
+  4: {
+    name: "Saved",
+    items: initialSavedState.tables,
+  },
+};
 
 export const userInfoState = {
   username: "",
@@ -88,19 +95,6 @@ export const updateApplied = (state, action) => {
       state.tables.push(action.payload);
   }
 };
-
-// export const updateTestReducer = (state, action) => {
-//   switch (action.type) {
-//     case "UPDATE_TEST":
-//       return {
-//         ...state,
-//         boolean: !state.boolean,
-//       };
-//     default: {
-//       return state;
-//     }
-//   }
-// };
 
 export const updateAppliedStateReducer = (state, action) => {
   switch (action.type) {
@@ -146,6 +140,14 @@ export const updateSavedStateReducer = (state, action) => {
         ...state,
         boolean: !state.boolean,
       };
+    default: {
+      return state;
+    }
+  }
+};
+
+export const columnsReducer = (state, action) => {
+  switch (action.type) {
     default: {
       return state;
     }

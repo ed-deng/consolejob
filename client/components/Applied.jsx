@@ -19,6 +19,7 @@ function Applied() {
     items.splice(result.destination.index, 0, reorderedItem);
     updateJobCards({ tables: items });
   }
+
   return (
     <div style={{ padding: "20px", border: "1px solid black" }}>
       <DragDropContext onDragEnd={handleOnDragEnd}>
