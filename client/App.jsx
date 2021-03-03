@@ -8,10 +8,6 @@ import {
 } from "react-router-dom";
 import Header from "./components/Header.jsx";
 import { TestContext } from "./state/context";
-import Applied from "./components/Applied.jsx";
-import InProgress from "./components/InProgress.jsx";
-import Completed from "./components/Completed.jsx";
-import Saved from "./components/Saved.jsx";
 import LoginPage from "./components/LoginPage.jsx";
 import { columns, columnsReducer } from "./state/reducers";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
