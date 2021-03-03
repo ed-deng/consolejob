@@ -99,21 +99,16 @@ export const userInfoState = {
 export const updateAppliedStateReducer = (state, action) => {
   switch (action.type) {
     case "APPLIED":
-<<<<<<< HEAD
-      return {
-        state: state.tables.push(action.payload),
-=======
-      console.log(state, 'state')
-      console.log(action, 'action')
+      console.log(state, "state");
+      console.log(action, "action");
       return {
         ...state,
-        tables: action.payload
->>>>>>> c3cc21354408d089244c26d0cec6c1fc4633fead
+        tables: action.payload,
       };
     default: {
       return {
         ...state,
-        tables: action.payload
+        tables: action.payload,
       };
     }
   }
