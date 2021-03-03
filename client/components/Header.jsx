@@ -8,7 +8,6 @@ function Header(props) {
     display_name,
     photo_url,
   } = props.userInfo;
-  console.log(props.userInfo);
   return (
     <div>
       <h1

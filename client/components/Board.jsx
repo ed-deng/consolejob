@@ -1,4 +1,4 @@
-import React, { useState, useReducer, useEffect } from 'react';
+import React, { useState, useReducer, useEffect, useLayoutEffect } from 'react';
 import { columns, columnsReducer } from '../state/reducers';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import NewJobModal from './NewJobModal.jsx';
@@ -44,6 +44,18 @@ function Board({ userInfo }) {
   const [prevJobColumn, prevJobDispatch] = useReducer(columnsReducer, columns);
   const [jobColumn, setColumns] = useState(prevJobColumn);
   const [showModal, updateShowModal] = useState(false);
+  const [userTables, setUserTables] = useState();
+
+  useEffect(() => {
+    fetch(`/jobs/${userInfo._id}`)
+      .then((data) => {
+        data.json();
+        console.log(data);
+      })
+      .then((parsedData) => setUserTables('hi'));
+  }, []);
+
+  console.log(userTables);
 
   return (
     <div
