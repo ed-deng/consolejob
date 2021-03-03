@@ -44,18 +44,22 @@ function Board({ userInfo }) {
   const [prevJobColumn, prevJobDispatch] = useReducer(columnsReducer, columns);
   const [jobColumn, setColumns] = useState(prevJobColumn);
   const [showModal, updateShowModal] = useState(false);
-  const [userTables, setUserTables] = useState();
+  const [userTables, setUserTables] = useState([]);
+  // const [userInfoId, setUserInfoId] = useState(userInfo);
+  // useEffect(() => {
+  //   fetch(`/jobs/${userInfo._id}`)
+  //     .then((data) => {
+  //       data.json();
+  //       console.log(data);
+  //     })
+  //     .then((parsedData) => {
+  //       setUserTables(parsedData);
+  //       console.log('userTables after setting: ', userTables);
+  //     });
+  // }, [userInfo]);
 
-  useEffect(() => {
-    fetch(`/jobs/${userInfo._id}`)
-      .then((data) => {
-        data.json();
-        console.log(data);
-      })
-      .then((parsedData) => setUserTables('hi'));
-  }, []);
-
-  console.log(userTables);
+  // console.log(userInfoId);
+  // console.log(userTables);
 
   return (
     <div
