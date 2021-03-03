@@ -55,7 +55,11 @@ function Board() {
     >
       <button onClick={() => updateShowModal(!showModal)}>Add New</button>
       {showModal ? (
-        <NewJobModal updateShowModal={updateShowModal} />
+        <NewJobModal 
+          updateShowModal={updateShowModal} 
+          jobColumn={jobColumn}
+          setColumns={setColumns}
+        />
       ) : (
         <div></div>
       )}
@@ -80,11 +84,9 @@ function Board() {
                         {...provided.droppableProps}
                         ref={provided.innerRef}
                         style={{
-                          background: snapshot.isDraggingOver
-                            ? "lightblue"
-                            : "lightgrey",
+                          background: snapshot.isDraggingOver ? "lightblue" : "lightgrey",
                           padding: 4,
-                          width: 250,
+                          width: 250, 
                           minHeight: 500,
                         }}
                       >
@@ -107,14 +109,16 @@ function Board() {
                                         padding: 16,
                                         margin: "0 0 8px 0",
                                         minHeight: "50px",
-                                        backgroundColor: snapshot.isDragging
-                                          ? "#263B4A"
-                                          : "#a1cae2",
+                                        backgroundColor: snapshot.isDragging ? "#263B4A" : "#a1cae2",
                                         color: "white",
                                         ...provided.draggableProps.style,
                                       }}
                                     >
                                       {item.company}
+                                      <div>
+                                      <button>View card</button>
+                                      <button>Delete card</button>
+                                    </div>
                                     </div>
                                   );
                                 } else if (column.name === "In Progress") {
@@ -128,14 +132,16 @@ function Board() {
                                         padding: 16,
                                         margin: "0 0 8px 0",
                                         minHeight: "50px",
-                                        backgroundColor: snapshot.isDragging
-                                          ? "#d98124"
-                                          : "#f69e7b",
+                                        backgroundColor: snapshot.isDragging ? "#d98124" : "#f69e7b",
                                         color: "white",
                                         ...provided.draggableProps.style,
                                       }}
                                     >
                                       {item.company}
+                                      <div>
+                                      <button>View card</button>
+                                      <button>Delete card</button>
+                                    </div>
                                     </div>
                                   );
                                 } else if (column.name === "Completed") {
@@ -149,14 +155,16 @@ function Board() {
                                         padding: 16,
                                         margin: "0 0 8px 0",
                                         minHeight: "50px",
-                                        backgroundColor: snapshot.isDragging
-                                          ? "#164d08"
-                                          : "#70af85",
+                                        backgroundColor: snapshot.isDragging ? "#164d08" : "#70af85",
                                         color: "white",
                                         ...provided.draggableProps.style,
                                       }}
                                     >
                                       {item.company}
+                                      <div>
+                                      <button>View card</button>
+                                      <button>Delete card</button>
+                                    </div>
                                     </div>
                                   );
                                 } else if (column.name === "Saved") {
@@ -170,14 +178,16 @@ function Board() {
                                         padding: 16,
                                         margin: "0 0 8px 0",
                                         minHeight: "50px",
-                                        backgroundColor: snapshot.isDragging
-                                          ? "#a61e00"
-                                          : "#cd5d7d",
+                                        backgroundColor: snapshot.isDragging ? "#a61e00" : "#cd5d7d",
                                         color: "white",
                                         ...provided.draggableProps.style,
                                       }}
                                     >
                                       {item.company}
+                                      <div>
+                                      <button>View card</button>
+                                      <button>Delete card</button>
+                                    </div>
                                     </div>
                                   );
                                 }
