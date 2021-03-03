@@ -70,7 +70,24 @@ export const initialSavedState = {
     },
   ],
 };
-
+export const columns = {
+  1: {
+    name: "Applied",
+    items: initialAppliedState.tables,
+  },
+  2: {
+    name: "In Progress",
+    items: initialInProgressState.tables,
+  },
+  3: {
+    name: "Completed",
+    items: initialCompletedState.tables,
+  },
+  4: {
+    name: "Saved",
+    items: initialSavedState.tables,
+  },
+};
 // export const initialTestContext = {
 //   boolean: false,
 // };
@@ -146,6 +163,14 @@ export const updateSavedStateReducer = (state, action) => {
         ...state,
         boolean: !state.boolean,
       };
+    default: {
+      return state;
+    }
+  }
+};
+
+export const columnsReducer = (state, action) => {
+  switch (action.type) {
     default: {
       return state;
     }

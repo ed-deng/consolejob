@@ -7,28 +7,18 @@ import {
   Redirect,
 } from "react-router-dom";
 import Header from "./components/Header.jsx";
-import Footer from "./components/Footer.jsx";
-import JobComponent from "./components/JobComponent.jsx";
 import { TestContext } from "./state/context";
 import Applied from "./components/Applied.jsx";
 import InProgress from "./components/InProgress.jsx";
 import Completed from "./components/Completed.jsx";
 import Saved from "./components/Saved.jsx";
 import LoginPage from "./components/LoginPage.jsx";
+import { columns, columnsReducer } from "./state/reducers";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
 export default function App() {
-  // const [testState, testDispatch] = useReducer(
-  //   updateTestReducer,
-  //   initialTestContext
-  // );
-
-  /**
-   * [
-   *  [1,2,3],
-   *  [2,5,8],
-   *  [84,2,55]
-   * ]
-   */
+  const [prevJobColumn, prevJobDispatch] = useReducer(columnsReducer, columns);
+  const [jobColumn, setColumns] = useState(prevJobColumn);
 
   return (
     <TestContext.Provider>
@@ -52,10 +42,61 @@ export default function App() {
             <div>
               <Header />
               <div style={{ display: "flex" }}>
-                <Applied />
-                <InProgress />
-                <Completed />
-                <Saved />
+                <DragDropContext>
+                  {Object.entries(jobColumn).map(([id, column]) => {
+                    return (
+                      <Droppable droppableId={id}>
+                        {(provided, snapshot) => {
+                          return (
+                            <div
+                              {...provided.droppableProps}
+                              ref={provided.innerRef}
+                              style={{
+                                background: snapshot.isDraggingOver
+                                  ? "lightblue"
+                                  : "lightgrey",
+                                padding: 4,
+                                width: 250,
+                                minHeight: 500,
+                              }}
+                            >
+                              {column.items.map((item, index) => {
+                                return (
+                                  <Draggable
+                                    key={index}
+                                    draggableId={index.toString()}
+                                    index={index}
+                                  >
+                                    {(provided, snapshot) => {
+                                      return (
+                                        <div
+                                          ref={provided.innerRef}
+                                          {...provided.draggableProps}
+                                          {...provided.dragHandleProps}
+                                          style={{
+                                            userSelect: "none",
+                                            padding: 16,
+                                            margin: "0 0 8px 0",
+                                            minHeight: "50px",
+                                            backgroundColor: snapshot.isDragging
+                                              ? "#263B4A"
+                                              : "#456C86",
+                                            color: "white",
+                                            ...provided.draggableProps.style,
+                                          }}
+                                        ></div>
+                                      );
+                                    }}
+                                  </Draggable>
+                                );
+                              })}
+                            </div>
+                          );
+                        }}
+                      </Droppable>
+                    );
+                  })}
+                </DragDropContext>
               </div>
             </div>
           </Route>
@@ -64,3 +105,16 @@ export default function App() {
     </TestContext.Provider>
   );
 }
+
+/*
+                    <Applied />
+                    <InProgress />
+                    <Completed />
+                    <Saved />
+
+                              <button
+                                onClick={() => {
+                                  console.log(column.items);
+                                }}
+                              ></button>
+*/
