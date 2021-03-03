@@ -16,6 +16,42 @@ import LoginPage from "./components/LoginPage.jsx";
 import { columns, columnsReducer } from "./state/reducers";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
+const onDragEnd = (result, jobColumn, setColumns) => {
+  if (!result.destination) return;
+  const { source, destination } = result;
+
+  if (source.droppableId !== destination.droppableId) {
+    const sourceColumn = jobColumn[source.droppableId];
+    const destColumn = jobColumn[destination.droppableId];
+    const sourceItems = [...sourceColumn.items];
+    const destItems = [...destColumn.items];
+    const [removed] = sourceItems.splice(source.index, 1);
+    destItems.splice(destination.index, 0, removed);
+    setColumns({
+      ...jobColumn,
+      [source.droppableId]: {
+        ...sourceColumn,
+        items: sourceItems,
+      },
+      [destination.droppableId]: {
+        ...destColumn,
+        items: destItems,
+      },
+    });
+  } else {
+    const column = jobColumn[source.droppableId];
+    const copiedItems = [...column.items];
+    const [removed] = copiedItems.splice(source.index, 1);
+    copiedItems.splice(destination.index, 0, removed);
+    setColumns({
+      ...jobColumn,
+      [source.droppableId]: {
+        ...column,
+        items: copiedItems,
+      },
+    });
+  }
+};
 export default function App() {
   const [prevJobColumn, prevJobDispatch] = useReducer(columnsReducer, columns);
   const [jobColumn, setColumns] = useState(prevJobColumn);
@@ -42,10 +78,14 @@ export default function App() {
             <div>
               <Header />
               <div style={{ display: "flex" }}>
-                <DragDropContext>
+                <DragDropContext
+                  onDragEnd={(result) =>
+                    onDragEnd(result, jobColumn, setColumns)
+                  }
+                >
                   {Object.entries(jobColumn).map(([id, column]) => {
                     return (
-                      <Droppable droppableId={id}>
+                      <Droppable droppableId={id} key={id}>
                         {(provided, snapshot) => {
                           return (
                             <div
@@ -63,8 +103,8 @@ export default function App() {
                               {column.items.map((item, index) => {
                                 return (
                                   <Draggable
-                                    key={index}
-                                    draggableId={index.toString()}
+                                    key={item.company}
+                                    draggableId={item.company}
                                     index={index}
                                   >
                                     {(provided, snapshot) => {
@@ -84,12 +124,15 @@ export default function App() {
                                             color: "white",
                                             ...provided.draggableProps.style,
                                           }}
-                                        ></div>
+                                        >
+                                          {item.company}
+                                        </div>
                                       );
                                     }}
                                   </Draggable>
                                 );
                               })}
+                              {provided.placeholder}
                             </div>
                           );
                         }}

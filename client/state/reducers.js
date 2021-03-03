@@ -22,13 +22,6 @@ export const initialAppliedState = {
       notes: "",
     },
     {
-      company: "Microsoft",
-      position: "",
-      status: "",
-      questions: "",
-      notes: "",
-    },
-    {
       company: "Bloomberg",
       position: "",
       status: "",
