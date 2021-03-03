@@ -1,14 +1,74 @@
 export const initialAppliedState = {
-  tables: [],
+  tables: [
+    {
+      company: "Facebook",
+      position: "",
+      status: "",
+      questions: "",
+      notes: "",
+    },
+    {
+      company: "Amazon",
+      position: "",
+      status: "",
+      questions: "",
+      notes: "",
+    },
+    {
+      company: "Google",
+      position: "",
+      status: "",
+      questions: "",
+      notes: "",
+    },
+    {
+      company: "Microsoft",
+      position: "",
+      status: "",
+      questions: "",
+      notes: "",
+    },
+    {
+      company: "Bloomberg",
+      position: "",
+      status: "",
+      questions: "",
+      notes: "",
+    },
+  ],
 };
 export const initialInProgressState = {
-  tables: [],
+  tables: [
+    {
+      company: "Spotify",
+      position: "",
+      status: "",
+      questions: "",
+      notes: "",
+    },
+  ],
 };
 export const initialCompletedState = {
-  tables: [],
+  tables: [
+    {
+      company: "Microsoft",
+      position: "",
+      status: "",
+      questions: "",
+      notes: "",
+    },
+  ],
 };
 export const initialSavedState = {
-  tables: [],
+  tables: [
+    {
+      company: "Apple",
+      position: "",
+      status: "",
+      questions: "",
+      notes: "",
+    },
+  ],
 };
 
 // export const initialTestContext = {
@@ -41,3 +101,53 @@ export const updateApplied = (state, action) => {
 //     }
 //   }
 // };
+
+export const updateAppliedStateReducer = (state, action) => {
+  switch (action.type) {
+    case "UPDATE_TEST":
+      return {
+        ...state,
+        boolean: !state.boolean,
+      };
+    default: {
+      return state;
+    }
+  }
+};
+
+export const updateInProgressStateReducer = (state, action) => {
+  switch (action.type) {
+    case "UPDATE_TEST":
+      return {
+        ...state,
+        boolean: !state.boolean,
+      };
+    default: {
+      return state;
+    }
+  }
+};
+export const updateCompletedStateReducer = (state, action) => {
+  switch (action.type) {
+    case "UPDATE_TEST":
+      return {
+        ...state,
+        boolean: !state.boolean,
+      };
+    default: {
+      return state;
+    }
+  }
+};
+export const updateSavedStateReducer = (state, action) => {
+  switch (action.type) {
+    case "UPDATE_TEST":
+      return {
+        ...state,
+        boolean: !state.boolean,
+      };
+    default: {
+      return state;
+    }
+  }
+};

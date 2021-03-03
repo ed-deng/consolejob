@@ -1,12 +1,12 @@
-const express = require('express');
-const path = require('path');
-const jobsRouter = require('./routes/jobs');
-const db = require('./db/model');
+const express = require("express");
+const path = require("path");
+const jobsRouter = require("./routes/jobs");
+const db = require("./db/model");
 // const cors = require('cors');
 
-const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } = require('../secret.js');
-const GitHubStrategy = require('passport-github2').Strategy;
-const passport = require('passport');
+const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } = require("../secret.js");
+const GitHubStrategy = require("passport-github2").Strategy;
+const passport = require("passport");
 
 const app = express();
 
@@ -21,16 +21,16 @@ passport.serializeUser(function (user, done) {
 passport.deserializeUser(function (obj, done) {
   done(null, obj);
 });
-
+//
 // const corsOptions = {
 // credentials: true,
 // };
 
 // app.use(cors(corsOptions));
 
-app.use('/build', express.static(path.join(__dirname, '../build')));
+app.use("/build", express.static(path.join(__dirname, "../build")));
 
-app.use('/jobs', jobsRouter);
+app.use("/jobs", jobsRouter);
 
 /*******************************************************************************************************/
 
@@ -39,8 +39,8 @@ app.use(passport.session());
 
 // app.use(ensureAuthenticated);
 
-app.get('/account', function (req, res) {
-  res.render('account', { user: req.user });
+app.get("/account", function (req, res) {
+  res.render("account", { user: req.user });
 });
 
 passport.use(
@@ -48,11 +48,11 @@ passport.use(
     {
       clientID: GITHUB_CLIENT_ID,
       clientSecret: GITHUB_CLIENT_SECRET,
-      callbackURL: 'http://localhost:8080/auth/github/callback',
+      callbackURL: "http://localhost:8080/auth/github/callback",
     },
     async function (accessToken, refreshToken, profile, done) {
       // asynchronous verification, for effect...
-      const findUser = 'SELECT * FROM users WHERE gh_id = $1';
+      const findUser = "SELECT * FROM users WHERE gh_id = $1";
       const params = [profile.id];
       let user = await db
         .query(findUser, params)
@@ -113,35 +113,35 @@ passport.use(
 // });
 
 app.get(
-  '/auth/github',
-  passport.authenticate('github', { scope: ['user:email'] })
+  "/auth/github",
+  passport.authenticate("github", { scope: ["user:email"] })
 );
 
 app.get(
-  '/auth/github/callback',
-  passport.authenticate('github', { failureRedirect: '/loginpage' }),
+  "/auth/github/callback",
+  passport.authenticate("github", { failureRedirect: "/loginpage" }),
   function (req, res) {
-    res.redirect('/board');
+    res.redirect("/board");
   }
 );
 
-app.get('/logout', function (req, res) {
+app.get("/logout", function (req, res) {
   req.logout();
-  res.redirect('/');
+  res.redirect("/");
 });
 
 /*******************************************************************************************************/
 
-app.get('/*', (req, res) => {
-  res.status(200).sendFile(path.join(__dirname, '../client/index.html'));
+app.get("/*", (req, res) => {
+  res.status(200).sendFile(path.join(__dirname, "../client/index.html"));
 });
 
 // global error handler
 app.use((err, req, res, next) => {
   const defaultErr = {
-    log: 'Express error handler caught unknown middleware error',
+    log: "Express error handler caught unknown middleware error",
     status: 400,
-    message: { err: 'An error occurred' },
+    message: { err: "An error occurred" },
   };
   const errorObj = Object.assign(defaultErr, err);
   console.log(errorObj.log);
@@ -155,9 +155,9 @@ app.listen(3000, () => console.log(`Listening on PORT ${PORT}`));
 //   the request is authenticated (typically via a persistent login session),
 //   the request will proceed.  Otherwise, the user will be redirected to the
 //   login page.
-function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect('/loginpage');
-}
+// function ensureAuthenticated(req, res, next) {
+//   if (req.isAuthenticated()) {
+//     return next();
+//   }
+//   res.redirect('/loginpage');
+// }
