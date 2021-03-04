@@ -117,10 +117,16 @@ function Board({ userInfo }) {
     >
       <button
         onClick={() => updateShowModal(!showModal)}
-        style={{ width: "4rem", height: "3rem" }}
-      >
-        Add New
-      </button>
+        style={{
+          position: "relative",
+          left: "-1.2rem",
+          top: "5rem",
+          borderRadius: 20,
+          width: "6.3rem",
+          height: "3.7rem",
+          background: 'url("https://i.imgur.com/Ow4Akbh.png")',
+        }}
+      ></button>
       {showModal ? (
         <NewJobModal
           userInfo={userInfo}
@@ -180,19 +186,41 @@ function Board({ userInfo }) {
                                         margin: "0 0 8px 0",
                                         minHeight: "50px",
                                         backgroundColor: snapshot.isDragging
-                                          ? "#263B4A"
+                                          ? "#607885"
                                           : "#a1cae2",
-                                        color: "white",
+                                        color: "black",
+                                        fontSize: "18px",
                                         ...provided.draggableProps.style,
                                       }}
                                     >
                                       {item.company}
                                       <div>
-                                        <button>View card</button>
+                                        <button
+                                          style={{
+                                            backgroundColor: "#282a36",
+                                            border: "none",
+                                            color: "white",
+                                            padding: "3.25px 8px",
+                                            textAlign: "center",
+                                            fontSize: "12px",
+                                            margin: "3px",
+                                          }}
+                                        >
+                                          View Card
+                                        </button>
                                         <button
                                           onClick={() =>
                                             deleteCard(item._id, column.name)
                                           }
+                                          style={{
+                                            backgroundColor: "#282a36",
+                                            border: "none",
+                                            color: "white",
+                                            padding: "3.25px 8px",
+                                            textAlign: "center",
+                                            fontSize: "12px",
+                                            margin: "3px",
+                                          }}
                                         >
                                           Delete card
                                         </button>
@@ -211,19 +239,40 @@ function Board({ userInfo }) {
                                         margin: "0 0 8px 0",
                                         minHeight: "50px",
                                         backgroundColor: snapshot.isDragging
-                                          ? "#d98124"
+                                          ? "#b57054"
                                           : "#f69e7b",
-                                        color: "white",
+                                        color: "black",
                                         ...provided.draggableProps.style,
                                       }}
                                     >
                                       {item.company}
                                       <div>
-                                        <button>View card</button>
+                                        <button
+                                          style={{
+                                            backgroundColor: "#282a36",
+                                            border: "none",
+                                            color: "white",
+                                            padding: "3.25px 8px",
+                                            textAlign: "center",
+                                            fontSize: "12px",
+                                            margin: "3px",
+                                          }}
+                                        >
+                                          View card
+                                        </button>
                                         <button
                                           onClick={() =>
                                             deleteCard(item._id, column.name)
                                           }
+                                          style={{
+                                            backgroundColor: "#282a36",
+                                            border: "none",
+                                            color: "white",
+                                            padding: "3.25px 8px",
+                                            textAlign: "center",
+                                            fontSize: "12px",
+                                            margin: "3px",
+                                          }}
                                         >
                                           Delete card
                                         </button>
@@ -242,19 +291,40 @@ function Board({ userInfo }) {
                                         margin: "0 0 8px 0",
                                         minHeight: "50px",
                                         backgroundColor: snapshot.isDragging
-                                          ? "#164d08"
+                                          ? "#558261"
                                           : "#70af85",
-                                        color: "white",
+                                        color: "black",
                                         ...provided.draggableProps.style,
                                       }}
                                     >
                                       {item.company}
                                       <div>
-                                        <button>View card</button>
+                                        <button
+                                          style={{
+                                            backgroundColor: "#282a36",
+                                            border: "none",
+                                            color: "white",
+                                            padding: "3.25px 8px",
+                                            textAlign: "center",
+                                            fontSize: "12px",
+                                            margin: "3px",
+                                          }}
+                                        >
+                                          View card
+                                        </button>
                                         <button
                                           onClick={() =>
                                             deleteCard(item._id, column.name)
                                           }
+                                          style={{
+                                            backgroundColor: "#282a36",
+                                            border: "none",
+                                            color: "white",
+                                            padding: "3.25px 8px",
+                                            textAlign: "center",
+                                            fontSize: "12px",
+                                            margin: "3px",
+                                          }}
                                         >
                                           Delete card
                                         </button>
@@ -275,17 +345,38 @@ function Board({ userInfo }) {
                                         backgroundColor: snapshot.isDragging
                                           ? "#964259"
                                           : "#cd5d7d",
-                                        color: "white",
+                                        color: "black",
                                         ...provided.draggableProps.style,
                                       }}
                                     >
                                       {item.company}
                                       <div>
-                                        <button>View card</button>
+                                        <button
+                                          style={{
+                                            backgroundColor: "#282a36",
+                                            border: "none",
+                                            color: "white",
+                                            padding: "3.25px 8px",
+                                            textAlign: "center",
+                                            fontSize: "12px",
+                                            margin: "3px",
+                                          }}
+                                        >
+                                          View card
+                                        </button>
                                         <button
                                           onClick={() =>
                                             deleteCard(item._id, column.name)
                                           }
+                                          style={{
+                                            backgroundColor: "#282a36",
+                                            border: "none",
+                                            color: "white",
+                                            padding: "3.25px 8px",
+                                            textAlign: "center",
+                                            fontSize: "12px",
+                                            margin: "3px",
+                                          }}
                                         >
                                           Delete card
                                         </button>

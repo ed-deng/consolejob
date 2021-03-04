@@ -30,7 +30,7 @@ function Header(props) {
             <img
               src="https://i.imgur.com/MCLYIJS.png"
               style={{
-                borderRadius: 100,
+                borderRadius: 20,
                 border: "1px solid grey",
               }}
             ></img>
