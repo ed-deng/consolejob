@@ -2,6 +2,10 @@
 @import "./addJob.scss";
 @import "./fonts";
 
+* {
+  outline: none;
+}
+
 body {
   font-family: "Source Code Pro";
   background-color: #282a36;
@@ -27,9 +31,78 @@ a {
 
   .displayName {
     color: white;
+    margin-top: 18px;
+    text-decoration: underline;
+    transition: ease 0.3s;
+  }
+
+  .displayName:hover {
+    color: #a6dcef;
   }
 }
 
 .btn {
   box-shadow: 2px 4px 25px rgba(255, 255, 255, 0.1);
+}
+
+.addOrDelete {
+  float: right;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 3.25px 8px;
+  font-size: 9px;
+  text-align: center;
+  margin: 2px;
+  transition: ease 0.3s;
+  cursor: default;
+  box-shadow: 2px 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.addOrDelete:hover {
+  box-shadow: 2px 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.addOrDelete:nth-child(0) {
+  margin-right: 30px;
+}
+
+.x {
+  font-size: 24px;
+  float: right;
+  transition: ease 0.3s;
+}
+
+.x:hover {
+  color: red;
+  cursor: pointer;
+  transform: rotate(15deg);
+}
+
+input {
+  text-align: center;
+  // border: none;
+  box-shadow: 3px 2px #a9a9a9;
+  background: transparent;
+  width: 200px;
+  height: 25px;
+  margin-left: 20px;
+  margin-top: 2px;
+}
+
+.submit {
+  margin-left: auto;
+  margin-right: auto;
+  color: #000;
+  font-family: sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  padding: 5px 20px;
+  border: 2px solid hsla(0, 0%, 66.3%, 0.3);
+  -webkit-transition: 0.3s ease;
+  transition: 0.3s ease;
+}
+
+.submit:hover {
+  border: 2px solid #a9a9a9;
+  cursor: pointer;
 }

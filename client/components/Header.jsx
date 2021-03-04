@@ -23,7 +23,9 @@ function Header(props) {
       </h1>
       <div className="userInfo">
         <img className="profilePic" src={photo_url} alt="Profile Pic" />
-        <p className="displayName">{display_name || username}</p>
+        <a className="displayName" href={profile_url}>
+          {display_name || username}
+        </a>
 
         <div style={{ position: "relative", left: "50rem", top: "-6.5rem" }}>
           <a href="/logout">

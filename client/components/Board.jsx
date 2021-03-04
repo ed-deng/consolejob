@@ -2,20 +2,25 @@ import React, { useState, useReducer, useEffect, useLayoutEffect } from "react";
 import { columns, columnsReducer } from "../state/reducers";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import NewJobModal from "./NewJobModal.jsx";
+import JobCard from "./JobCard.jsx";
 
 const onDragEnd = (result, jobColumn, setColumns) => {
   if (!result.destination) return;
   const { source, destination } = result;
+  let newJobColumn = JSON.parse(JSON.stringify(jobColumn));
 
   if (source.droppableId !== destination.droppableId) {
-    const sourceColumn = jobColumn[source.droppableId];
-    const destColumn = jobColumn[destination.droppableId];
+    const sourceColumn = newJobColumn[source.droppableId];
+    const destColumn = newJobColumn[destination.droppableId];
+
     const sourceItems = [...sourceColumn.items];
+    console.log(result.draggableId);
     const destItems = [...destColumn.items];
+
     const [removed] = sourceItems.splice(source.index, 1);
     destItems.splice(destination.index, 0, removed);
-    setColumns({
-      ...jobColumn,
+    newJobColumn = {
+      ...newJobColumn,
       [source.droppableId]: {
         ...sourceColumn,
         items: sourceItems,
@@ -24,12 +29,19 @@ const onDragEnd = (result, jobColumn, setColumns) => {
         ...destColumn,
         items: destItems,
       },
+    };
+
+    newJobColumn[destination.droppableId].items.forEach((el) => {
+      if (el._id.toString() === result.draggableId) {
+        el.status = destColumn.name;
+      }
     });
-    // console.log(jobColumn);
+
+    setColumns(newJobColumn);
+
     const info = {
       status: destColumn.name,
     };
-
     fetch(`/jobs/edit/${result.draggableId}`, {
       method: "PUT",
       headers: {
@@ -55,6 +67,7 @@ const onDragEnd = (result, jobColumn, setColumns) => {
 function Board({ userInfo }) {
   const [jobColumn, setColumns] = useState(columns);
   const [showModal, updateShowModal] = useState(false);
+  const [viewJob, updateViewJob] = useState({});
 
   const deleteCard = (cardId, status) => {
     fetch(`jobs/delete/${cardId}`, {
@@ -83,6 +96,14 @@ function Board({ userInfo }) {
     });
   };
 
+  const displayCard = (cardId) => {
+    Object.keys(jobColumn).forEach((key) => {
+      jobColumn[key].items.forEach((item) => {
+        if (item._id === cardId) return updateViewJob(item);
+      });
+    });
+  };
+
   useEffect(() => {
     if (!userInfo._id) return;
     fetch(`/jobs/${userInfo._id}`, { headers: { "cache-control": "no-cache" } })
@@ -104,6 +125,10 @@ function Board({ userInfo }) {
         console.log("just called setColumns: ", jobColumn);
       });
   }, [userInfo]);
+
+  useEffect(() => {
+    console.log(viewJob);
+  }, [viewJob]);
 
   return (
     <div
@@ -132,6 +157,16 @@ function Board({ userInfo }) {
           updateShowModal={updateShowModal}
           jobColumn={jobColumn}
           setColumns={setColumns}
+        />
+      ) : (
+        <div></div>
+      )}
+      {Object.keys(viewJob).length ? (
+        <JobCard
+          job={viewJob}
+          updateViewJob={updateViewJob}
+          updateShowModal={updateShowModal}
+          jobColumn={jobColumn}
         />
       ) : (
         <div></div>
@@ -194,35 +229,22 @@ function Board({ userInfo }) {
                                     >
                                       {item.company}
                                       <div>
-                                        <button
-                                          style={{
-                                            backgroundColor: "#B9B9B9",
-                                            color: "black",
-                                            borderRadius: 20,
-                                            padding: "3.25px 8px",
-                                            textAlign: "center",
-                                            fontSize: "12px",
-                                            margin: "3px",
+                                        <div
+                                          className="addOrDelete"
+                                          onClick={() => {
+                                            displayCard(item._id);
                                           }}
                                         >
                                           View Card
-                                        </button>
-                                        <button
+                                        </div>
+                                        <div
+                                          className="addOrDelete"
                                           onClick={() =>
                                             deleteCard(item._id, column.name)
                                           }
-                                          style={{
-                                            backgroundColor: "#B9B9B9",
-                                            color: "black",
-                                            borderRadius: 20,
-                                            padding: "3.25px 8px",
-                                            textAlign: "center",
-                                            fontSize: "12px",
-                                            margin: "3px",
-                                          }}
                                         >
                                           Delete card
-                                        </button>
+                                        </div>
                                       </div>
                                     </div>
                                   );
@@ -247,35 +269,22 @@ function Board({ userInfo }) {
                                     >
                                       {item.company}
                                       <div>
-                                        <button
-                                          style={{
-                                            backgroundColor: "#B9B9B9",
-                                            color: "black",
-                                            borderRadius: 20,
-                                            padding: "3.25px 8px",
-                                            textAlign: "center",
-                                            fontSize: "12px",
-                                            margin: "3px",
+                                        <div
+                                          className="addOrDelete"
+                                          onClick={() => {
+                                            displayCard(item._id);
                                           }}
                                         >
                                           View card
-                                        </button>
-                                        <button
+                                        </div>
+                                        <div
+                                          className="addOrDelete"
                                           onClick={() =>
                                             deleteCard(item._id, column.name)
                                           }
-                                          style={{
-                                            backgroundColor: "#B9B9B9",
-                                            color: "black",
-                                            borderRadius: 20,
-                                            padding: "3.25px 8px",
-                                            textAlign: "center",
-                                            fontSize: "12px",
-                                            margin: "3px",
-                                          }}
                                         >
                                           Delete card
-                                        </button>
+                                        </div>
                                       </div>
                                     </div>
                                   );
@@ -300,35 +309,22 @@ function Board({ userInfo }) {
                                     >
                                       {item.company}
                                       <div>
-                                        <button
-                                          style={{
-                                            backgroundColor: "#B9B9B9",
-                                            color: "black",
-                                            borderRadius: 20,
-                                            padding: "3.25px 8px",
-                                            textAlign: "center",
-                                            fontSize: "12px",
-                                            margin: "3px",
+                                        <div
+                                          className="addOrDelete"
+                                          onClick={() => {
+                                            displayCard(item._id);
                                           }}
                                         >
                                           View card
-                                        </button>
-                                        <button
+                                        </div>
+                                        <div
+                                          className="addOrDelete"
                                           onClick={() =>
                                             deleteCard(item._id, column.name)
                                           }
-                                          style={{
-                                            backgroundColor: "#B9B9B9",
-                                            color: "black",
-                                            borderRadius: 20,
-                                            padding: "3.25px 8px",
-                                            textAlign: "center",
-                                            fontSize: "12px",
-                                            margin: "3px",
-                                          }}
                                         >
                                           Delete card
-                                        </button>
+                                        </div>
                                       </div>
                                     </div>
                                   );
@@ -353,35 +349,22 @@ function Board({ userInfo }) {
                                     >
                                       {item.company}
                                       <div>
-                                        <button
-                                          style={{
-                                            backgroundColor: "#B9B9B9",
-                                            color: "black",
-                                            borderRadius: 20,
-                                            padding: "3.25px 8px",
-                                            textAlign: "center",
-                                            fontSize: "12px",
-                                            margin: "3px",
+                                        <div
+                                          className="addOrDelete"
+                                          onClick={() => {
+                                            displayCard(item._id);
                                           }}
                                         >
                                           View card
-                                        </button>
-                                        <button
+                                        </div>
+                                        <div
+                                          className="addOrDelete"
                                           onClick={() =>
                                             deleteCard(item._id, column.name)
                                           }
-                                          style={{
-                                            backgroundColor: "#B9B9B9",
-                                            color: "black",
-                                            borderRadius: 20,
-                                            padding: "3.25px 8px",
-                                            textAlign: "center",
-                                            fontSize: "12px",
-                                            margin: "3px",
-                                          }}
                                         >
                                           Delete card
-                                        </button>
+                                        </div>
                                       </div>
                                     </div>
                                   );

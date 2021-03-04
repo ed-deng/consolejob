@@ -1,39 +1,16 @@
-import React, { useState, useReducer } from "react";
-import {
-  updateAppliedStateReducer,
-  initialAppliedState,
-} from "../state/reducers";
+import React, { useState } from "react";
 
-export default function NewJobModal({
-  userInfo,
-  updateShowModal,
-  jobColumn,
-  setColumns,
-}) {
-  const [company, updateCompany] = useState("");
-  const [position, updatePosition] = useState("");
-  const [listing, updateListing] = useState("");
-  const [applicationStatus, updateStatus] = useState("Saved");
-  const [questions, updateQuestions] = useState("");
-  const [notes, updateNotes] = useState("");
-  const [appliedJob, appliedDispatch] = useReducer(
-    updateAppliedStateReducer,
-    initialAppliedState
-  );
+export default function JobCard({ job, updateViewJob, userInfo, jobColumn }) {
+  const [company, updateCompany] = useState(job.company);
+  const [position, updatePosition] = useState(job.position);
+  const [listing, updateListing] = useState(job.listing);
+  const [applicationStatus, updateStatus] = useState(job.status);
+  const [questions, updateQuestions] = useState(job.questions);
+  const [notes, updateNotes] = useState(job.notes);
 
-  const resetState = () => {
-    updateCompany("");
-    updatePosition("");
-    updateListing("");
-    updateStatus("Saved");
-    updateQuestions("");
-    updateNotes("");
-  };
-
-  const addJob = () => {
+  const updateJob = () => {
     if (!company || !position || !listing) return;
     const body = {
-      user_id: userInfo._id,
       company,
       position,
       listing,
@@ -41,49 +18,46 @@ export default function NewJobModal({
       questions,
       notes,
     };
-    console.log("appliedJob: ", appliedJob);
-    fetch(`/jobs/new`, {
-      method: "POST",
+
+    fetch(`/jobs/update/${job._id}`, {
+      method: "PUT",
       headers: { "Content-Type": "Application/JSON" },
       body: JSON.stringify(body),
     })
       .then((res) => res.json())
       .then((data) => {
-        const columnsCopy = JSON.parse(JSON.stringify(jobColumn));
-        Object.keys(columnsCopy).forEach((key) => {
-          if (columnsCopy[key].name === data.job.status) {
-            columnsCopy[key].items.push(data.job);
-          }
-        });
-        setColumns(columnsCopy);
+        // const columnsCopy = JSON.parse(JSON.stringify(jobColumn));
+        // Object.keys(columnsCopy).forEach((key) => {
+        //   if (columnsCopy[key].name === data.job.status) {
+        //     columnsCopy[key].items.push(data.job);
+        //   }
+        // });
+        // setColumns(columnsCopy);
+        console.log(data);
         // if (data.job.status === 'Applied') {
         //   setColumns()
-        // }
-        updateShowModal(false);
+        //
       });
-    resetState();
   };
-
   return (
-    <div class="modal">
+    <div className="modal">
+      <div className="x" onClick={() => updateViewJob({})}>
+        x
+      </div>
       <label htmlFor="company">Company:</label>
       <input
-        id="company"
-        name="company"
         type="text"
+        name="position"
         value={company}
         onChange={(e) => updateCompany(e.target.value)}
-        required={true}
       ></input>
       <br />
       <label htmlFor="position">Position:</label>
       <input
-        id="position"
-        name="position"
         type="text"
+        name="position"
         value={position}
         onChange={(e) => updatePosition(e.target.value)}
-        required={true}
       ></input>
       <br />
       <label htmlFor="listing">Listing:</label>
@@ -92,10 +66,8 @@ export default function NewJobModal({
         type="text"
         value={listing}
         onChange={(e) => updateListing(e.target.value)}
-        required={true}
       ></input>
       <br />
-      <label htmlFor="Status">Status:</label>
       <select
         name="status"
         id="status"
@@ -116,15 +88,16 @@ export default function NewJobModal({
         onChange={(e) => updateQuestions(e.target.value)}
       ></textarea>
       <br />
-
+      <label htmlFor="notes">Notes:</label>
+      <br />
       <textarea
-        id="notes"
         name="notes"
         value={notes}
         onChange={(e) => updateNotes(e.target.value)}
       ></textarea>
-      <br />
-      <button onClick={addJob}>Submit</button>
+      <button className="submit" onClick={updateJob}>
+        Update
+      </button>
     </div>
   );
 }
