@@ -10,7 +10,6 @@ const onDragEnd = (result, jobColumn, setColumns) => {
   if (source.droppableId !== destination.droppableId) {
     const sourceColumn = jobColumn[source.droppableId];
     const destColumn = jobColumn[destination.droppableId];
-    console.log(destColumn);
     const sourceItems = [...sourceColumn.items];
     const destItems = [...destColumn.items];
     const [removed] = sourceItems.splice(source.index, 1);
@@ -51,7 +50,6 @@ const onDragEnd = (result, jobColumn, setColumns) => {
       },
     });
   }
-  // console.log(jobColumn);
 };
 
 function Board({ userInfo }) {
@@ -116,6 +114,7 @@ function Board({ userInfo }) {
       }}
     >
       <button
+        className="btn"
         onClick={() => updateShowModal(!showModal)}
         style={{
           position: "relative",

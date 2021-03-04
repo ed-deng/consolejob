@@ -28,6 +28,7 @@ function Header(props) {
         <div style={{ position: "relative", left: "50rem", top: "-6.5rem" }}>
           <a href="/logout">
             <img
+              className="btn"
               src="https://i.imgur.com/MCLYIJS.png"
               style={{
                 borderRadius: 20,
