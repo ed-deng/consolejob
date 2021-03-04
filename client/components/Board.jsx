@@ -14,7 +14,6 @@ const onDragEnd = (result, jobColumn, setColumns) => {
     const destColumn = newJobColumn[destination.droppableId];
 
     const sourceItems = [...sourceColumn.items];
-    console.log(result.draggableId);
     const destItems = [...destColumn.items];
 
     const [removed] = sourceItems.splice(source.index, 1);
@@ -107,12 +106,10 @@ function Board({ userInfo }) {
   useEffect(() => {
     if (!userInfo._id) return;
     fetch(`/jobs/${userInfo._id}`, { headers: { "cache-control": "no-cache" } })
-      .then((data) => {
-        console.log(data);
-        return data.json();
+      .then((res) => {
+        return res.json();
       })
       .then((parsedData) => {
-        console.log("parsedData: ", parsedData);
         const newJobColumn = JSON.parse(JSON.stringify(columns));
         parsedData.jobs.forEach((job) => {
           if (job.status === "Applied") newJobColumn[1].items.push(job);
@@ -122,13 +119,8 @@ function Board({ userInfo }) {
           else if (job.status === "Saved") newJobColumn[4].items.push(job);
         });
         setColumns(newJobColumn);
-        console.log("just called setColumns: ", jobColumn);
       });
   }, [userInfo]);
-
-  useEffect(() => {
-    console.log(viewJob);
-  }, [viewJob]);
 
   return (
     <div
@@ -167,6 +159,7 @@ function Board({ userInfo }) {
           updateViewJob={updateViewJob}
           updateShowModal={updateShowModal}
           jobColumn={jobColumn}
+          setColumns={setColumns}
         />
       ) : (
         <div></div>

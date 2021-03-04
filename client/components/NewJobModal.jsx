@@ -41,7 +41,6 @@ export default function NewJobModal({
       questions,
       notes,
     };
-    console.log("appliedJob: ", appliedJob);
     fetch(`/jobs/new`, {
       method: "POST",
       headers: { "Content-Type": "Application/JSON" },
@@ -56,9 +55,6 @@ export default function NewJobModal({
           }
         });
         setColumns(columnsCopy);
-        // if (data.job.status === 'Applied') {
-        //   setColumns()
-        // }
         updateShowModal(false);
       });
     resetState();
@@ -66,6 +62,9 @@ export default function NewJobModal({
 
   return (
     <div class="modal">
+      <div className="x" onClick={() => updateShowModal(false)}>
+        x
+      </div>
       <label htmlFor="company">Company:</label>
       <input
         id="company"
