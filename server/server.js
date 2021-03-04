@@ -49,12 +49,10 @@ app.get("/account", function (req, res) {
 });
 
 app.get("/user", (req, res, next) => {
-  console.log("in /user");
   if (!req.session.passport) {
-    console.log("error ocurred");
+    // return res.redirect('/loginpage')
     res.status(300).send("no user found");
   } else {
-    console.log("no error");
     res.status(200).json(req.session.passport.user);
   }
 });

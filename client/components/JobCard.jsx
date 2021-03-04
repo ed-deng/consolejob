@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function JobCard({ job, updateViewJob, userInfo, jobColumn }) {
+export default function JobCard({ job, updateViewJob, jobColumn, setColumns }) {
   const [company, updateCompany] = useState(job.company);
   const [position, updatePosition] = useState(job.position);
   const [listing, updateListing] = useState(job.listing);
@@ -26,17 +26,15 @@ export default function JobCard({ job, updateViewJob, userInfo, jobColumn }) {
     })
       .then((res) => res.json())
       .then((data) => {
-        // const columnsCopy = JSON.parse(JSON.stringify(jobColumn));
-        // Object.keys(columnsCopy).forEach((key) => {
-        //   if (columnsCopy[key].name === data.job.status) {
-        //     columnsCopy[key].items.push(data.job);
-        //   }
-        // });
-        // setColumns(columnsCopy);
-        console.log(data);
-        // if (data.job.status === 'Applied') {
-        //   setColumns()
-        //
+        const columnsCopy = JSON.parse(JSON.stringify(jobColumn));
+        Object.keys(columnsCopy).forEach((key) => {
+          // removes old
+          const idx = columnsCopy[key].items.findIndex(job => job._id === data.job._id);
+          if (idx >= 0) columnsCopy[key].items.splice(idx, 1);
+          // adds new
+          if (columnsCopy[key].name === data.job.status) columnsCopy[key].items.push(data.job);
+        });
+        setColumns(columnsCopy);
       });
   };
   return (
