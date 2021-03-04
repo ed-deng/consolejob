@@ -22,7 +22,7 @@ function Header(props) {
       </h1>
       <div className="userInfo">
         <img className="profilePic" src={photo_url} alt="Profile Pic" />
-        <p className="displayName">{display_name}</p>
+        <p className="displayName">{display_name || username}</p>
       </div>
     </div>
   );
