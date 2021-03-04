@@ -6,7 +6,7 @@ export default function HomePage() {
     <div className="loginContainer">
       <h1>Login With GitHub</h1>
       <div className="loginInnerContainer">
-        <a href="/auth/github/callback">
+        <a href="/auth/github">
           <GithubLoginButton className="loginButton" />
         </a>
       </div>

@@ -1,8 +1,8 @@
-import React, { useState, useReducer } from 'react';
+import React, { useState, useReducer } from "react";
 import {
   updateAppliedStateReducer,
   initialAppliedState,
-} from '../state/reducers';
+} from "../state/reducers";
 
 export default function NewJobModal({
   userInfo,
@@ -10,24 +10,24 @@ export default function NewJobModal({
   jobColumn,
   setColumns,
 }) {
-  const [company, updateCompany] = useState('');
-  const [position, updatePosition] = useState('');
-  const [listing, updateListing] = useState('');
-  const [applicationStatus, updateStatus] = useState('Saved');
-  const [questions, updateQuestions] = useState('');
-  const [notes, updateNotes] = useState('');
+  const [company, updateCompany] = useState("");
+  const [position, updatePosition] = useState("");
+  const [listing, updateListing] = useState("");
+  const [applicationStatus, updateStatus] = useState("Saved");
+  const [questions, updateQuestions] = useState("");
+  const [notes, updateNotes] = useState("");
   const [appliedJob, appliedDispatch] = useReducer(
     updateAppliedStateReducer,
     initialAppliedState
   );
 
   const resetState = () => {
-    updateCompany('');
-    updatePosition('');
-    updateListing('');
-    updateStatus('Saved');
-    updateQuestions('');
-    updateNotes('');
+    updateCompany("");
+    updatePosition("");
+    updateListing("");
+    updateStatus("Saved");
+    updateQuestions("");
+    updateNotes("");
   };
 
   const addJob = () => {
@@ -41,10 +41,10 @@ export default function NewJobModal({
       questions,
       notes,
     };
-    console.log('appliedJob: ', appliedJob);
+    console.log("appliedJob: ", appliedJob);
     fetch(`/jobs/new`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'Application/JSON' },
+      method: "POST",
+      headers: { "Content-Type": "Application/JSON" },
       body: JSON.stringify(body),
     })
       .then((res) => res.json())

@@ -54,21 +54,20 @@ export const userInfoState = {
 export const updateAppliedStateReducer = (state, action) => {
   switch (action.type) {
     case "APPLIED":
-      console.log(state, 'state')
-      console.log(action, 'action')
+      console.log(state, "state");
+      console.log(action, "action");
       return {
         ...state,
-        tables: action.payload
+        tables: action.payload,
       };
     default: {
       return {
         ...state,
-        tables: action.payload
+        tables: action.payload,
       };
     }
   }
 };
-
 export const updateInProgressStateReducer = (state, action) => {
   switch (action.type) {
     case "UPDATE_TEST":

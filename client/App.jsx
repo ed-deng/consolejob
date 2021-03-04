@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link,
   Redirect,
-} from 'react-router-dom';
-import Header from './components/Header.jsx';
-import { TestContext } from './state/context';
-import LoginPage from './components/LoginPage.jsx';
-import Board from './components/Board.jsx';
+} from "react-router-dom";
+import Header from "./components/Header.jsx";
+import { TestContext } from "./state/context";
+import LoginPage from "./components/LoginPage.jsx";
+import Board from "./components/Board.jsx";
 
 export default function App() {
   const [userInfo, setUserInfo] = useState({});
 
   useEffect(() => {
-    fetch('/user', {headers: { 'cache-control': 'no-cache' }})
+    fetch("/user", { headers: { "cache-control": "no-cache" } })
       .then((res) => res.json())
       .then((data) => {
         setUserInfo(data);

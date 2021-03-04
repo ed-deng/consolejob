@@ -1,9 +1,9 @@
-const db = require('../db/model');
+const db = require("../db/model");
 
 const jobsController = {};
 
 jobsController.getJobs = (req, res, next) => {
-  const query = 'SELECT * FROM jobs WHERE user_id = $1';
+  const query = "SELECT * FROM jobs WHERE user_id = $1";
   const params = [req.params.userId];
   db.query(query, params)
     .then((data) => {
@@ -55,7 +55,7 @@ jobsController.postJob = (req, res, next) => {
 
 jobsController.deleteJobs = (req, res, next) => {
   const params = [req.params.jobId];
-  const query = 'DELETE FROM jobs WHERE _id = $1';
+  const query = "DELETE FROM jobs WHERE _id = $1";
   db.query(query, params)
     .then((data) => next())
     .catch((err) => {
@@ -65,6 +65,30 @@ jobsController.deleteJobs = (req, res, next) => {
     });
 };
 
+jobsController.updateJob = (req, res, next) => {
+  const { status } = req.body;
+  const { jobId } = req.params;
+  const params = [parseInt(jobId), status];
+  console.log(params[0]);
+  const query = `
+      UPDATE jobs
+      SET status = $2
+      WHERE _id = $1
+      RETURNING *
+    `;
+  db.query(query, params)
+    .then((data) => {
+      res.locals.job = data.rows[0];
+      return next();
+    })
+    .catch((err) => {
+      return next({
+        log: `Express error handler caught in jobsController.editJobs ${err}`,
+      });
+    });
+};
+
+/*
 jobsController.updateJob = (req, res, next) => {
   const { position, company, listing, status, questions, notes } = req.body;
   const { jobId } = req.params;
@@ -95,5 +119,6 @@ jobsController.updateJob = (req, res, next) => {
       });
     });
 };
+*/
 
 module.exports = jobsController;
