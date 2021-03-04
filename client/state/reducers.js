@@ -1,66 +1,21 @@
 export const initialAppliedState = {
   tables: [
-    {
-      company: "Facebook",
-      position: "",
-      status: "",
-      questions: "",
-      notes: "",
-    },
-    {
-      company: "Amazon",
-      position: "",
-      status: "",
-      questions: "",
-      notes: "",
-    },
-    {
-      company: "Google",
-      position: "",
-      status: "",
-      questions: "",
-      notes: "",
-    },
-    {
-      company: "Bloomberg",
-      position: "",
-      status: "",
-      questions: "",
-      notes: "",
-    },
+    
   ],
 };
 export const initialInProgressState = {
   tables: [
-    {
-      company: "Spotify",
-      position: "",
-      status: "",
-      questions: "",
-      notes: "",
-    },
+    
   ],
 };
 export const initialCompletedState = {
   tables: [
-    {
-      company: "Microsoft",
-      position: "",
-      status: "",
-      questions: "",
-      notes: "",
-    },
+    
   ],
 };
 export const initialSavedState = {
   tables: [
-    {
-      company: "Apple",
-      position: "",
-      status: "",
-      questions: "",
-      notes: "",
-    },
+    
   ],
 };
 export const columns = {

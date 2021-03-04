@@ -45,6 +45,33 @@ function Board({ userInfo }) {
   const [jobColumn, setColumns] = useState(prevJobColumn);
   const [showModal, updateShowModal] = useState(false);
   const [userTables, setUserTables] = useState([]);
+  const [userInfoId, setUserInfoId] = useState(userInfo);
+  useEffect(() => {
+    if (!userInfo._id) return;
+    fetch(`/jobs/${userInfo._id}`, { headers: { "cache-control": "no-cache" } })
+      .then((data) => {
+        console.log(data);
+        return data.json();
+      })
+      .then((parsedData) => {
+        console.log("parsedData: ", parsedData);
+        const newJobColumn = JSON.parse(JSON.stringify(columns));
+        parsedData.jobs.forEach((job) => {
+          if (job.status === "Applied") newJobColumn[1].items.push(job);
+          else if (job.status === "In Progress")
+            newJobColumn[2].items.push(job);
+          else if (job.status === "Completed") newJobColumn[3].items.push(job);
+          else if (job.status === "Saved") newJobColumn[4].items.push(job);
+        });
+        setColumns(newJobColumn);
+        setUserTables(parsedData.jobs);
+        console.log("userTables after setting: ", userTables);
+      });
+  }, [userInfo]);
+
+  useEffect(() => {
+    console.log(userTables);
+  }, [userTables]);
 
   useEffect(() => {
     if (!userInfo._id) return;
@@ -115,8 +142,8 @@ function Board({ userInfo }) {
                         {column.items.map((item, index) => {
                           return (
                             <Draggable
-                              key={item.company}
-                              draggableId={item.company}
+                              key={item._id}
+                              draggableId={`${item._id}`}
                               index={index}
                             >
                               {(provided, snapshot) => {
