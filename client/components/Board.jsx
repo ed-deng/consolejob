@@ -40,12 +40,27 @@ const onDragEnd = (result, jobColumn, setColumns) => {
   }
 };
 
+
+
 function Board({ userInfo }) {
-  const [prevJobColumn, prevJobDispatch] = useReducer(columnsReducer, columns);
-  const [jobColumn, setColumns] = useState(prevJobColumn);
+  const [jobColumn, setColumns] = useState(columns);
   const [showModal, updateShowModal] = useState(false);
-  const [userTables, setUserTables] = useState([]);
-  const [userInfoId, setUserInfoId] = useState(userInfo);
+
+  const deleteCard = (cardId, status) => {
+    fetch(`jobs/delete/${cardId}`, {
+      method: 'DELETE'
+    }).then(res => {
+      if (res.status === 200) {
+        const newJobColumn = JSON.parse(JSON.stringify(jobColumn));
+        if (status === 'Applied') newJobColumn[1].items = newJobColumn[1].items.filter(job => job._id !== cardId);
+        else if (status === 'In Progress') newJobColumn[2].items = newJobColumn[2].items.filter(job => job._id !== cardId);
+        else if (status === 'Completed') newJobColumn[3].items = newJobColumn[3].items.filter(job => job._id !== cardId);
+        else if (status === 'Saved') newJobColumn[4].items = newJobColumn[4].items.filter(job => job._id !== cardId);
+        setColumns(newJobColumn);
+      }
+    })
+  }
+  
   useEffect(() => {
     if (!userInfo._id) return;
     fetch(`/jobs/${userInfo._id}`, { headers: { 'cache-control': 'no-cache' } })
@@ -63,17 +78,9 @@ function Board({ userInfo }) {
           else if (job.status === 'Saved') newJobColumn[4].items.push(job);
         })
         setColumns(newJobColumn);
-        setUserTables(parsedData.jobs)
-        console.log('userTables after setting: ', userTables);
+        console.log('just called setColumns: ', jobColumn)
       });
   }, [userInfo]);
-
-  useEffect(() => {
-    console.log(userTables)
-  }, [userTables])
-
-  // console.log(userInfoId);
-  // console.log(userTables);
 
   return (
     <div
@@ -152,7 +159,7 @@ function Board({ userInfo }) {
                                       {item.company}
                                       <div>
                                         <button>View card</button>
-                                        <button>Delete card</button>
+                                        <button onClick={()=>deleteCard(item._id, column.name)}>Delete card</button>
                                       </div>
                                     </div>
                                   );
@@ -177,7 +184,7 @@ function Board({ userInfo }) {
                                       {item.company}
                                       <div>
                                         <button>View card</button>
-                                        <button>Delete card</button>
+                                        <button onClick={()=>deleteCard(item._id, column.name)}>Delete card</button>
                                       </div>
                                     </div>
                                   );
@@ -202,7 +209,7 @@ function Board({ userInfo }) {
                                       {item.company}
                                       <div>
                                         <button>View card</button>
-                                        <button>Delete card</button>
+                                        <button onClick={()=>deleteCard(item._id, column.name)}>Delete card</button>
                                       </div>
                                     </div>
                                   );
@@ -227,7 +234,7 @@ function Board({ userInfo }) {
                                       {item.company}
                                       <div>
                                         <button>View card</button>
-                                        <button>Delete card</button>
+                                        <button onClick={()=>deleteCard(item._id, column.name)}>Delete card</button>
                                       </div>
                                     </div>
                                   );
