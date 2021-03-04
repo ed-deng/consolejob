@@ -69,7 +69,6 @@ jobsController.updateJobStatus = (req, res, next) => {
   const { status } = req.body;
   const { jobId } = req.params;
   const params = [parseInt(jobId), status];
-  console.log(params[0]);
   const query = `
       UPDATE jobs
       SET status = $2
@@ -100,7 +99,6 @@ jobsController.updateJob = (req, res, next) => {
     questions,
     notes,
   ];
-  console.log(params[0]);
   const query = `
       UPDATE jobs
       SET position = $2, company = $3, listing = $4, status = $5, questions = $6, notes = $7

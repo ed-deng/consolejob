@@ -54,8 +54,6 @@ export const userInfoState = {
 export const updateAppliedStateReducer = (state, action) => {
   switch (action.type) {
     case "APPLIED":
-      console.log(state, "state");
-      console.log(action, "action");
       return {
         ...state,
         tables: action.payload,
