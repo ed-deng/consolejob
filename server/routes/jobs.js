@@ -1,24 +1,30 @@
-const express = require('express');
-const jobsController = require('../controllers/jobsController');
+const express = require("express");
+const jobsController = require("../controllers/jobsController");
 const router = express.Router();
 
-router.get('/:userId', jobsController.getJobs, (req, res) =>
+router.get("/:userId", jobsController.getJobs, (req, res) =>
   res.status(200).json({
     jobs: res.locals.jobs,
   })
 );
 
-router.post('/new', jobsController.postJob, (req, res) =>
+router.post("/new", jobsController.postJob, (req, res) =>
   res.status(200).json({
     job: res.locals.job,
   })
 );
 
-router.delete('/delete/:jobId', jobsController.deleteJobs, (req, res) => {
-  res.status(200).send('Job Deleted');
+router.delete("/delete/:jobId", jobsController.deleteJobs, (req, res) => {
+  res.status(200).send("Job Deleted");
 });
 
-router.put('/edit/:jobId', jobsController.updateJob, (req, res) => {
+router.put("/edit/:jobId", jobsController.updateJobStatus, (req, res) => {
+  res.status(200).json({
+    job: res.locals.job,
+  });
+});
+
+router.put("/update/:jobId", jobsController.updateJob, (req, res) => {
   res.status(200).json({
     job: res.locals.job,
   });

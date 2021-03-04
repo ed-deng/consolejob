@@ -65,7 +65,7 @@ jobsController.deleteJobs = (req, res, next) => {
     });
 };
 
-jobsController.updateJob = (req, res, next) => {
+jobsController.updateJobStatus = (req, res, next) => {
   const { status } = req.body;
   const { jobId } = req.params;
   const params = [parseInt(jobId), status];
@@ -88,7 +88,6 @@ jobsController.updateJob = (req, res, next) => {
     });
 };
 
-/*
 jobsController.updateJob = (req, res, next) => {
   const { position, company, listing, status, questions, notes } = req.body;
   const { jobId } = req.params;
@@ -119,6 +118,5 @@ jobsController.updateJob = (req, res, next) => {
       });
     });
 };
-*/
 
 module.exports = jobsController;
