@@ -197,9 +197,9 @@ function Board({ userInfo }) {
                                       <div>
                                         <button
                                           style={{
-                                            backgroundColor: "#282a36",
-                                            border: "none",
-                                            color: "white",
+                                            backgroundColor: "#B9B9B9",
+                                            color: "black",
+                                            borderRadius: 20,
                                             padding: "3.25px 8px",
                                             textAlign: "center",
                                             fontSize: "12px",
@@ -213,9 +213,9 @@ function Board({ userInfo }) {
                                             deleteCard(item._id, column.name)
                                           }
                                           style={{
-                                            backgroundColor: "#282a36",
-                                            border: "none",
-                                            color: "white",
+                                            backgroundColor: "#B9B9B9",
+                                            color: "black",
+                                            borderRadius: 20,
                                             padding: "3.25px 8px",
                                             textAlign: "center",
                                             fontSize: "12px",
@@ -249,9 +249,9 @@ function Board({ userInfo }) {
                                       <div>
                                         <button
                                           style={{
-                                            backgroundColor: "#282a36",
-                                            border: "none",
-                                            color: "white",
+                                            backgroundColor: "#B9B9B9",
+                                            color: "black",
+                                            borderRadius: 20,
                                             padding: "3.25px 8px",
                                             textAlign: "center",
                                             fontSize: "12px",
@@ -265,9 +265,9 @@ function Board({ userInfo }) {
                                             deleteCard(item._id, column.name)
                                           }
                                           style={{
-                                            backgroundColor: "#282a36",
-                                            border: "none",
-                                            color: "white",
+                                            backgroundColor: "#B9B9B9",
+                                            color: "black",
+                                            borderRadius: 20,
                                             padding: "3.25px 8px",
                                             textAlign: "center",
                                             fontSize: "12px",
@@ -301,9 +301,9 @@ function Board({ userInfo }) {
                                       <div>
                                         <button
                                           style={{
-                                            backgroundColor: "#282a36",
-                                            border: "none",
-                                            color: "white",
+                                            backgroundColor: "#B9B9B9",
+                                            color: "black",
+                                            borderRadius: 20,
                                             padding: "3.25px 8px",
                                             textAlign: "center",
                                             fontSize: "12px",
@@ -317,9 +317,9 @@ function Board({ userInfo }) {
                                             deleteCard(item._id, column.name)
                                           }
                                           style={{
-                                            backgroundColor: "#282a36",
-                                            border: "none",
-                                            color: "white",
+                                            backgroundColor: "#B9B9B9",
+                                            color: "black",
+                                            borderRadius: 20,
                                             padding: "3.25px 8px",
                                             textAlign: "center",
                                             fontSize: "12px",
@@ -353,9 +353,9 @@ function Board({ userInfo }) {
                                       <div>
                                         <button
                                           style={{
-                                            backgroundColor: "#282a36",
-                                            border: "none",
-                                            color: "white",
+                                            backgroundColor: "#B9B9B9",
+                                            color: "black",
+                                            borderRadius: 20,
                                             padding: "3.25px 8px",
                                             textAlign: "center",
                                             fontSize: "12px",
@@ -369,9 +369,9 @@ function Board({ userInfo }) {
                                             deleteCard(item._id, column.name)
                                           }
                                           style={{
-                                            backgroundColor: "#282a36",
-                                            border: "none",
-                                            color: "white",
+                                            backgroundColor: "#B9B9B9",
+                                            color: "black",
+                                            borderRadius: 20,
                                             padding: "3.25px 8px",
                                             textAlign: "center",
                                             fontSize: "12px",
