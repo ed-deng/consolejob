@@ -10,6 +10,7 @@ const onDragEnd = (result, jobColumn, setColumns) => {
   if (source.droppableId !== destination.droppableId) {
     const sourceColumn = jobColumn[source.droppableId];
     const destColumn = jobColumn[destination.droppableId];
+    console.log(destColumn);
     const sourceItems = [...sourceColumn.items];
     const destItems = [...destColumn.items];
     const [removed] = sourceItems.splice(source.index, 1);
@@ -25,6 +26,18 @@ const onDragEnd = (result, jobColumn, setColumns) => {
         items: destItems,
       },
     });
+    // console.log(jobColumn);
+    const info = {
+      status: destColumn.name,
+    };
+
+    fetch(`/jobs/edit/${result.draggableId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(info),
+    });
   } else {
     const column = jobColumn[source.droppableId];
     const copiedItems = [...column.items];
@@ -38,9 +51,8 @@ const onDragEnd = (result, jobColumn, setColumns) => {
       },
     });
   }
+  // console.log(jobColumn);
 };
-
-
 
 function Board({ userInfo }) {
   const [jobColumn, setColumns] = useState(columns);
@@ -48,19 +60,31 @@ function Board({ userInfo }) {
 
   const deleteCard = (cardId, status) => {
     fetch(`jobs/delete/${cardId}`, {
-      method: 'DELETE'
-    }).then(res => {
+      method: "DELETE",
+    }).then((res) => {
       if (res.status === 200) {
         const newJobColumn = JSON.parse(JSON.stringify(jobColumn));
-        if (status === 'Applied') newJobColumn[1].items = newJobColumn[1].items.filter(job => job._id !== cardId);
-        else if (status === 'In Progress') newJobColumn[2].items = newJobColumn[2].items.filter(job => job._id !== cardId);
-        else if (status === 'Completed') newJobColumn[3].items = newJobColumn[3].items.filter(job => job._id !== cardId);
-        else if (status === 'Saved') newJobColumn[4].items = newJobColumn[4].items.filter(job => job._id !== cardId);
+        if (status === "Applied")
+          newJobColumn[1].items = newJobColumn[1].items.filter(
+            (job) => job._id !== cardId
+          );
+        else if (status === "In Progress")
+          newJobColumn[2].items = newJobColumn[2].items.filter(
+            (job) => job._id !== cardId
+          );
+        else if (status === "Completed")
+          newJobColumn[3].items = newJobColumn[3].items.filter(
+            (job) => job._id !== cardId
+          );
+        else if (status === "Saved")
+          newJobColumn[4].items = newJobColumn[4].items.filter(
+            (job) => job._id !== cardId
+          );
         setColumns(newJobColumn);
       }
-    })
-  }
-  
+    });
+  };
+
   useEffect(() => {
     if (!userInfo._id) return;
     fetch(`/jobs/${userInfo._id}`, { headers: { "cache-control": "no-cache" } })
@@ -79,35 +103,10 @@ function Board({ userInfo }) {
           else if (job.status === "Saved") newJobColumn[4].items.push(job);
         });
         setColumns(newJobColumn);
-<<<<<<< HEAD
-        setUserTables(parsedData.jobs);
-        console.log("userTables after setting: ", userTables);
+        console.log("just called setColumns: ", jobColumn);
       });
   }, [userInfo]);
 
-  useEffect(() => {
-    console.log(userTables);
-  }, [userTables]);
-
-  useEffect(() => {
-    if (!userInfo._id) return;
-    fetch(`/jobs/${userInfo._id}`)
-      .then((data) => {
-        data.json();
-        console.log(data);
-      })
-      .then((parsedData) => {
-        setUserTables(parsedData);
-        console.log("userTables after setting: ", userTables);
-      });
-  }, [userInfo]);
-
-=======
-        console.log('just called setColumns: ', jobColumn)
-      });
-  }, [userInfo]);
-
->>>>>>> a8df2317359bf2b1521ac88282826474f202c348
   return (
     <div
       style={{
@@ -190,7 +189,13 @@ function Board({ userInfo }) {
                                       {item.company}
                                       <div>
                                         <button>View card</button>
-                                        <button onClick={()=>deleteCard(item._id, column.name)}>Delete card</button>
+                                        <button
+                                          onClick={() =>
+                                            deleteCard(item._id, column.name)
+                                          }
+                                        >
+                                          Delete card
+                                        </button>
                                       </div>
                                     </div>
                                   );
@@ -215,7 +220,13 @@ function Board({ userInfo }) {
                                       {item.company}
                                       <div>
                                         <button>View card</button>
-                                        <button onClick={()=>deleteCard(item._id, column.name)}>Delete card</button>
+                                        <button
+                                          onClick={() =>
+                                            deleteCard(item._id, column.name)
+                                          }
+                                        >
+                                          Delete card
+                                        </button>
                                       </div>
                                     </div>
                                   );
@@ -240,7 +251,13 @@ function Board({ userInfo }) {
                                       {item.company}
                                       <div>
                                         <button>View card</button>
-                                        <button onClick={()=>deleteCard(item._id, column.name)}>Delete card</button>
+                                        <button
+                                          onClick={() =>
+                                            deleteCard(item._id, column.name)
+                                          }
+                                        >
+                                          Delete card
+                                        </button>
                                       </div>
                                     </div>
                                   );
@@ -265,7 +282,13 @@ function Board({ userInfo }) {
                                       {item.company}
                                       <div>
                                         <button>View card</button>
-                                        <button onClick={()=>deleteCard(item._id, column.name)}>Delete card</button>
+                                        <button
+                                          onClick={() =>
+                                            deleteCard(item._id, column.name)
+                                          }
+                                        >
+                                          Delete card
+                                        </button>
                                       </div>
                                     </div>
                                   );
