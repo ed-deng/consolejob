@@ -189,7 +189,7 @@ function Board({ userInfo }) {
                                           ? "#607885"
                                           : "#a1cae2",
                                         color: "black",
-                                        fontSize: "18px",
+                                        fontWeight: "bold",
                                         ...provided.draggableProps.style,
                                       }}
                                     >
@@ -242,6 +242,7 @@ function Board({ userInfo }) {
                                           ? "#b57054"
                                           : "#f69e7b",
                                         color: "black",
+                                        fontWeight: "bold",
                                         ...provided.draggableProps.style,
                                       }}
                                     >
@@ -294,6 +295,7 @@ function Board({ userInfo }) {
                                           ? "#558261"
                                           : "#70af85",
                                         color: "black",
+                                        fontWeight: "bold",
                                         ...provided.draggableProps.style,
                                       }}
                                     >
@@ -346,6 +348,7 @@ function Board({ userInfo }) {
                                           ? "#964259"
                                           : "#cd5d7d",
                                         color: "black",
+                                        fontWeight: "bold",
                                         ...provided.draggableProps.style,
                                       }}
                                     >
